@@ -988,7 +988,9 @@
     }
     function displayPlayerStats(stats) {
       const container = document.getElementById('playerList');
-      if (!stats || stats.length === 0) { container.innerHTML = '<div class="loading">No data found</div>'; return; }
+      console.log('[DEBUG] displayPlayerStats received:', stats, 'type:', typeof stats, 'isArray:', Array.isArray(stats));
+      if (!stats || (Array.isArray(stats) && stats.length === 0)) { container.innerHTML = '<div class="loading">No data found</div>'; return; }
+      if (!Array.isArray(stats)) { container.innerHTML = '<div class="loading" style="color:#d93025;">Error: Expected array of player stats, got ' + typeof stats + '</div>'; return; }
       const typeData = {};
       stats.forEach(player => {
         if (player.chestsByTypeGrouped) {
