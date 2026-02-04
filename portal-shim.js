@@ -29,6 +29,7 @@
   }
 
   function createRunner() {
+    // Create a fresh handlers object for each call chain
     const handlers = { success: null, failure: null };
     const runner = new Proxy({}, {
       get(_target, prop) {
@@ -38,10 +39,13 @@
         if (prop === 'withFailureHandler') {
           return (fn) => { handlers.failure = fn; return runner; };
         }
+        // When a function is called, capture the current handlers
         return (...args) => {
+          // Clone handlers to prevent them from being overwritten by subsequent calls
+          const capturedHandlers = { success: handlers.success, failure: handlers.failure };
           callApi(prop, args)
-            .then((result) => { if (handlers.success) handlers.success(result); })
-            .catch((err) => { if (handlers.failure) handlers.failure(err); else console.error(err); });
+            .then((result) => { if (capturedHandlers.success) capturedHandlers.success(result); })
+            .catch((err) => { if (capturedHandlers.failure) capturedHandlers.failure(err); else console.error(err); });
           return runner;
         };
       }
@@ -51,5 +55,8 @@
 
   window.google = window.google || {};
   window.google.script = window.google.script || {};
-  window.google.script.run = createRunner();
+  // Create a new runner for each call
+  Object.defineProperty(window.google.script, 'run', {
+    get() { return createRunner(); }
+  });
 })();
