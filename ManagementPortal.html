@@ -1004,10 +1004,23 @@
     function displayPlayerStats(stats) {
       const container = document.getElementById('playerList');
       console.log('[DEBUG] displayPlayerStats received:', stats, 'type:', typeof stats, 'isArray:', Array.isArray(stats));
-      if (!stats || (Array.isArray(stats) && stats.length === 0)) { container.innerHTML = '<div class="loading">No data found</div>'; return; }
-      if (!Array.isArray(stats)) { container.innerHTML = '<div class="loading" style="color:#d93025;">Error: Expected array of player stats, got ' + typeof stats + '</div>'; return; }
+      
+      // Normalize response format
+      const norm = normalizeResponse(stats);
+      let playerArray = norm.data || norm.playerStats || stats;
+      
+      // If it's an object with summary data (totalChests, totalMembers), ignore it - wrong handler
+      if (playerArray && typeof playerArray === 'object' && !Array.isArray(playerArray) && ('totalChests' in playerArray || 'totalMembers' in playerArray)) {
+        console.warn('[DEBUG] displayPlayerStats ignoring summary data (wrong handler called)');
+        return;
+      }
+      
+      // Ensure we have an array
+      if (!Array.isArray(playerArray)) playerArray = [];
+      
+      if (playerArray.length === 0) { container.innerHTML = '<div class="loading">No data found</div>'; return; }
       const typeData = {};
-      stats.forEach(player => {
+      playerArray.forEach(player => {
         if (player.chestsByTypeGrouped) {
           Object.entries(player.chestsByTypeGrouped).forEach(([type,data]) => {
             if (!typeData[type]) typeData[type] = { levels:new Set(), total:0 };
@@ -1022,7 +1035,7 @@
       sortedTypes.forEach(type=>{ headerHtml += `<div class="header-cell type-total-header" onclick="toggleType('${type.name}')" data-type="${type.name}"><span class="toggle-icon">▶</span>${type.name}</div>`; type.levels.forEach(level=>{ headerHtml += `<div class="header-cell level-header" data-type="${type.name}" data-level="${level}">Lvl ${level}</div>`;}); });
       headerHtml += '</div>';
       let rowsHtml = '';
-      stats.forEach((player,idx)=>{
+      playerArray.forEach((player,idx)=>{
         const commonCryptInfo = player.chestsByTypeGrouped?.['Common Crypt'];
         const totalPointsVal = player.totalPoints || 0;
         const pointsClass = totalPointsVal >= 2000 ? 'player-green' : (totalPointsVal >= 1000 ? 'player-orange' : 'player-red');
