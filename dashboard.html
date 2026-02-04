@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GFW Chest Tracker Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f1f3f4;
+      color: #202124;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      padding: 24px;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      color: #1a73e8;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #5f6368;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid #e8eaed;
+    }
+
+    .tab-btn {
+      padding: 12px 16px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #5f6368;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: #1a73e8;
+    }
+
+    .tab-btn.active {
+      color: #1a73e8;
+      border-bottom-color: #1a73e8;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: #f8f9fa;
+      border: 1px solid #e8eaed;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #5f6368;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1a73e8;
+      word-break: break-all;
+    }
+
+    .date-picker {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .date-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .date-input-group label {
+      font-size: 12px;
+      color: #5f6368;
+      font-weight: 500;
+    }
+
+    .date-input-group input {
+      padding: 8px 12px;
+      border: 1px solid #d3d3d3;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .preset-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .preset-btn {
+      padding: 8px 12px;
+      background: #f8f9fa;
+      border: 1px solid #d3d3d3;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #1a73e8;
+      transition: all 0.2s;
+    }
+
+    .preset-btn:hover {
+      background: #e8f0fe;
+      border-color: #1a73e8;
+    }
+
+    .load-btn {
+      padding: 10px 16px;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .load-btn:hover {
+      background: #1557b0;
+    }
+
+    .last-updated {
+      font-size: 12px;
+      color: #5f6368;
+      margin-bottom: 16px;
+    }
+
+    .chest-table {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #e8eaed;
+      border-radius: 4px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .table-header {
+      display: grid;
+      grid-template-columns: 50px 140px 60px 70px repeat(auto-fit, minmax(100px, 1fr));
+      gap: 0;
+      background: #f8f9fa;
+      border-bottom: 2px solid #e8eaed;
+      font-weight: 600;
+      font-size: 12px;
+      color: #5f6368;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-cell {
+      padding: 12px 8px;
+      border-right: 1px solid #e8eaed;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .header-cell:last-child {
+      border-right: none;
+    }
+
+    .type-total-header {
+      cursor: pointer;
+      user-select: none;
+      background: #f8f9fa;
+      transition: background 0.2s;
+    }
+
+    .type-total-header:hover {
+      background: #efefef;
+    }
+
+    .type-total-header.expanded .toggle-icon {
+      transform: rotate(90deg);
+    }
+
+    .toggle-icon {
+      display: inline-block;
+      width: 16px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .rank-col {
+      text-align: center;
+    }
+
+    .level-header {
+      display: none;
+      font-size: 11px;
+      background: #fafbfc;
+    }
+
+    .level-header.visible {
+      display: flex;
+    }
+
+    .player-row {
+      display: grid;
+      grid-template-columns: 50px 140px 60px 70px repeat(auto-fit, minmax(100px, 1fr));
+      gap: 0;
+      border-bottom: 1px solid #e8eaed;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .player-row:last-child {
+      border-bottom: none;
+    }
+
+    .player-row:hover {
+      background: #f8f9fa;
+    }
+
+    .cell {
+      padding: 12px 8px;
+      border-right: 1px solid #e8eaed;
+      display: flex;
+      align-items: center;
+    }
+
+    .cell:last-child {
+      border-right: none;
+    }
+
+    .rank-col {
+      text-align: center;
+      color: #5f6368;
+      font-weight: 500;
+    }
+
+    .player-green {
+      color: #0d652d;
+      font-weight: 500;
+    }
+
+    .player-orange {
+      color: #9c6500;
+      font-weight: 500;
+    }
+
+    .player-red {
+      color: #d33b27;
+      font-weight: 500;
+    }
+
+    .level-cell {
+      display: none;
+      background: #fafbfc;
+      font-size: 12px;
+    }
+
+    .level-cell.visible {
+      display: flex;
+    }
+
+    .count-zero {
+      color: #ccc;
+    }
+
+    .loading {
+      padding: 24px;
+      text-align: center;
+      color: #5f6368;
+      font-size: 14px;
+    }
+
+    .points-reference-table {
+      background: white;
+      border-radius: 8px;
+      padding: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      overflow-x: auto;
+      display: inline-block;
+    }
+
+    .points-table {
+      width: auto;
+      border-collapse: collapse;
+    }
+
+    .points-table thead {
+      background: #f8f9fa;
+      border-bottom: 2px solid #e8eaed;
+    }
+
+    .points-table th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+      color: #5f6368;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .points-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e8eaed;
+      font-size: 13px;
+      color: #202124;
+    }
+
+    .points-table tbody tr:hover {
+      background: #f8f9fa;
+    }
+
+    .points-table .type-cell {
+      font-weight: 500;
+      min-width: 140px;
+    }
+
+    .points-table .level-cell {
+      min-width: 160px;
+      display: table-cell !important;
+      background: #fafbfc;
+      font-size: 12px;
+    }
+
+    .points-table .points-cell {
+      text-align: right;
+      font-weight: 500;
+      color: #1a73e8;
+    }
+
+    @media (max-width: 768px) {
+      .date-picker {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .table-header,
+      .player-row {
+        grid-template-columns: 40px 100px 50px 60px 1fr;
+      }
+
+      .chest-table {
+        font-size: 11px;
+      }
+
+      .header-cell,
+      .cell {
+        padding: 8px 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚔️ GFW Chest Tracker</h1>
+    <div class="subtitle">Member performance dashboard</div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('dashboardTab', event)">Dashboard</button>
+      <button class="tab-btn" onclick="switchTab('pointsTab', event)">Points Reference</button>
+    </div>
+
+    <div id="dashboardTab" class="tab-content active">
+      <div class="date-picker">
+        <div class="date-input-group">
+          <label>Start Date:</label>
+          <input type="date" id="startDate">
+        </div>
+        <div class="date-input-group">
+          <label>End Date:</label>
+          <input type="date" id="endDate">
+        </div>
+        <div class="preset-btns">
+          <button class="preset-btn" onclick="applyPreset('today')">Today</button>
+          <button class="preset-btn" onclick="applyPreset('week')">This Week</button>
+          <button class="preset-btn" onclick="applyPreset('month')">This Month</button>
+          <button class="preset-btn" onclick="applyPreset('lastmonth')">Last Month</button>
+        </div>
+        <button class="load-btn" onclick="loadDashboard()">Load Data</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Chests</div>
+          <div class="stat-value" id="totalChests">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Active Players</div>
+          <div class="stat-value" id="totalPlayers">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Members Tracking</div>
+          <div class="stat-value" id="totalMembers">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Points</div>
+          <div class="stat-value" id="totalPoints">0</div>
+        </div>
+      </div>
+
+      <div class="last-updated" id="lastUpdatedDisplay">Last Date Available: No data available • Weekly target: 2000 points</div>
+
+      <div id="playerList" class="loading">Select dates and click "Load Data" to view statistics</div>
+    </div>
+
+    <div id="pointsTab" class="tab-content">
+      <div class="points-reference-table">
+        <table class="points-table">
+          <thead>
+            <tr>
+              <th class="type-cell">Chest Type</th>
+              <th class="level-cell">Level</th>
+              <th class="points-cell">Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="type-cell">Common Crypt</td>
+              <td class="level-cell">Level 1</td>
+              <td class="points-cell">1</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Common Crypt</td>
+              <td class="level-cell">Level 5</td>
+              <td class="points-cell">⚠️ 25</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Common Crypt</td>
+              <td class="level-cell">Level 10</td>
+              <td class="points-cell">⚠️ 100</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Ancient Dungeon</td>
+              <td class="level-cell">Level 1</td>
+              <td class="points-cell">2</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Ancient Dungeon</td>
+              <td class="level-cell">Level 5</td>
+              <td class="points-cell">10</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Ancient Dungeon</td>
+              <td class="level-cell">Level 10</td>
+              <td class="points-cell">40</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Skeleton King</td>
+              <td class="level-cell">Level 1</td>
+              <td class="points-cell">4</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Skeleton King</td>
+              <td class="level-cell">Level 5</td>
+              <td class="points-cell">20</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Skeleton King</td>
+              <td class="level-cell">Level 10</td>
+              <td class="points-cell">80</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Draconum</td>
+              <td class="level-cell">Level 1</td>
+              <td class="points-cell">5</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Draconum</td>
+              <td class="level-cell">Level 5</td>
+              <td class="points-cell">25</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Draconum</td>
+              <td class="level-cell">Level 10</td>
+              <td class="points-cell">100</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Infernal Temple</td>
+              <td class="level-cell">Level 1</td>
+              <td class="points-cell">10</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Infernal Temple</td>
+              <td class="level-cell">Level 5</td>
+              <td class="points-cell">50</td>
+            </tr>
+            <tr>
+              <td class="type-cell">Infernal Temple</td>
+              <td class="level-cell">Level 10</td>
+              <td class="points-cell">200</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="portal-shim.js"></script>
+  <script>
+    let expandedTypes = new Set();
+    const today = new Date();
+    
+    // Initialize date inputs with today's date
+    document.addEventListener('DOMContentLoaded', () => {
+      const startInput = document.getElementById('startDate');
+      const endInput = document.getElementById('endDate');
+      
+      const todayStr = formatDate(today);
+      startInput.value = todayStr;
+      endInput.value = todayStr;
+      applyPreset('today');
+    });
+
+    function formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function formatDisplayDate(date) {
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function switchTab(tabId, evt) {
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+      document.getElementById(tabId)?.classList.add('active');
+      if (evt && evt.target) evt.target.classList.add('active');
+    }
+
+    function applyPreset(preset) {
+      const startInput = document.getElementById('startDate');
+      const endInput = document.getElementById('endDate');
+      const displayElement = document.querySelector('.last-updated');
+
+      if (preset === 'today') {
+        const todayStr = formatDate(today);
+        startInput.value = todayStr;
+        endInput.value = todayStr;
+        displayElement.textContent = `Viewing: Today: ${formatDisplayDate(today)}`;
+        loadDashboard();
+        return;
+      }
+
+      if (preset === 'week') {
+        const start = new Date(today);
+        start.setDate(today.getDate() - today.getDay());
+        const end = new Date(start);
+        end.setDate(start.getDate() + 6);
+        startInput.value = formatDate(start);
+        endInput.value = formatDate(end);
+        displayElement.textContent = `Viewing: Week of ${formatDisplayDate(start)} – ${formatDisplayDate(end)}`;
+        loadDashboard();
+        return;
+      }
+
+      if (preset === 'month' || preset === 'currentmonth') {
+        const start = new Date(today.getFullYear(), today.getMonth(), 1);
+        const end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        startInput.value = formatDate(start);
+        endInput.value = formatDate(end);
+        displayElement.textContent = `Viewing: Current Month: ${formatDisplayDate(start)} – ${formatDisplayDate(end)}`;
+        loadDashboard();
+        return;
+      }
+
+      if (preset === 'lastmonth') {
+        const start = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const end = new Date(today.getFullYear(), today.getMonth(), 0);
+        startInput.value = formatDate(start);
+        endInput.value = formatDate(end);
+        displayElement.textContent = `Viewing: Last Month: ${formatDisplayDate(start)} – ${formatDisplayDate(end)}`;
+        loadDashboard();
+        return;
+      }
+    }
+
+    function loadDashboard() {
+      const startDate = document.getElementById('startDate').value;
+      const endDate = document.getElementById('endDate').value;
+      
+      google.script.run
+        .withSuccessHandler(displaySummary)
+        .withFailureHandler((e) => console.error('Summary error:', e))
+        .getStatsSummary(startDate, endDate);
+
+      document.getElementById('playerList').innerHTML = '<div class="loading">Loading...</div>';
+      
+      google.script.run
+        .withSuccessHandler(displayPlayerStats)
+        .withFailureHandler((e) => {
+          console.error('Stats error:', e);
+          document.getElementById('playerList').innerHTML = '<div class="loading" style="color: #d93025;">Error loading player stats</div>';
+        })
+        .getPlayerStats(null, null, startDate, endDate);
+    }
+
+    function displaySummary(data) {
+      // Normalize response format
+      const norm = normalizeResponse(data);
+      let summaryData = norm.data || norm;
+      
+      document.getElementById('totalChests').textContent = summaryData.totalChests ? summaryData.totalChests.toLocaleString() : '0';
+      document.getElementById('totalMembers').textContent = summaryData.totalMembers || '0';
+      document.getElementById('totalPlayers').textContent = summaryData.totalPlayers || '0';
+      document.getElementById('totalPoints').textContent = summaryData.totalPoints ? summaryData.totalPoints.toLocaleString() : '0';
+      
+      if (summaryData.lastAvailableDate) {
+        const dateObj = new Date(summaryData.lastAvailableDate + 'T00:00:00');
+        const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        document.getElementById('lastUpdatedDisplay').textContent = `Last Date Available: ${dateStr} • Weekly target: 2000 points`;
+      } else {
+        document.getElementById('lastUpdatedDisplay').textContent = 'Last Date Available: No data available • Weekly target: 2000 points';
+      }
+    }
+
+    function normalizeResponse(result) {
+      if (!result) return { success: false, data: null };
+      if (result.success === false || result.error) return result;
+      if (result.ok === true) return { success: true, data: result.data, ...result };
+      if (result.success === true) return result;
+      return { success: true, data: result, ...result };
+    }
+
+    function displayPlayerStats(stats) {
+      const container = document.getElementById('playerList');
+      console.log('[DEBUG] displayPlayerStats received:', stats, 'type:', typeof stats, 'isArray:', Array.isArray(stats));
+      
+      // Normalize response format
+      const norm = normalizeResponse(stats);
+      let playerArray = norm.data || norm.playerStats || stats;
+      
+      // If it's an object with summary data (totalChests, totalMembers), ignore it - wrong handler
+      if (playerArray && typeof playerArray === 'object' && !Array.isArray(playerArray) && ('totalChests' in playerArray || 'totalMembers' in playerArray)) {
+        console.warn('[DEBUG] displayPlayerStats ignoring summary data (wrong handler called)');
+        return;
+      }
+      
+      // Ensure we have an array
+      if (!Array.isArray(playerArray)) playerArray = [];
+      
+      if (playerArray.length === 0) { container.innerHTML = '<div class="loading">No data found</div>'; return; }
+
+      const typeData = {};
+      playerArray.forEach(player => {
+        if (player.chestsByTypeGrouped) {
+          Object.entries(player.chestsByTypeGrouped).forEach(([type, data]) => {
+            if (!typeData[type]) {
+              typeData[type] = { levels: new Set(), total: 0 };
+            }
+            if (data.levels) {
+              Object.keys(data.levels).forEach(level => typeData[type].levels.add(level));
+            }
+            typeData[type].total += data.total || 0;
+          });
+        }
+      });
+
+      const sortedTypes = Object.entries(typeData)
+        .sort((a, b) => b[1].total - a[1].total)
+        .map(([name, data]) => ({
+          name,
+          levels: Array.from(data.levels).map(l => parseInt(l)).sort((a, b) => a - b)
+        }));
+
+      let headerHtml = '<div class="table-header">';
+      headerHtml += '<div class="header-cell rank-col">Rank</div>';
+      headerHtml += '<div class="header-cell">Player</div>';
+      headerHtml += '<div class="header-cell">Pts</div>';
+      headerHtml += '<div class="header-cell">Total</div>';
+
+      sortedTypes.forEach(type => {
+        headerHtml += `<div class="header-cell type-total-header" onclick="toggleType('${type.name}')" data-type="${type.name}"><span class="toggle-icon">▶</span>${type.name}</div>`;
+        type.levels.forEach(level => {
+          headerHtml += `<div class="header-cell level-header" data-type="${type.name}" data-level="${level}">Lvl ${level}</div>`;
+        });
+      });
+
+      headerHtml += '</div>';
+
+      let rowsHtml = '';
+      playerArray.forEach((player, idx) => {
+        const commonCryptInfo = player.chestsByTypeGrouped?.['Common Crypt'];
+        const totalPointsVal = player.totalPoints || 0;
+        const pointsClass = totalPointsVal >= 2000 ? 'player-green' : (totalPointsVal >= 1000 ? 'player-orange' : 'player-red');
+        rowsHtml += '<div class="player-row">';
+        rowsHtml += `<div class="cell rank-col">${idx + 1}</div>`;
+        rowsHtml += `<div class="cell ${pointsClass}">${player.player}</div>`;
+        rowsHtml += `<div class="cell">${totalPointsVal || '-'}</div>`;
+
+        let totalChests = player.totalChests || 0;
+        if (totalChests === 0 && player.chestsByTypeGrouped) {
+          Object.values(player.chestsByTypeGrouped).forEach(typeInfo => {
+            totalChests += typeInfo.total || 0;
+          });
+        }
+        rowsHtml += `<div class="cell">${totalChests || '-'}</div>`;
+
+        sortedTypes.forEach(type => {
+          const typeInfo = player.chestsByTypeGrouped?.[type.name];
+          const totalCount = typeInfo?.total || 0;
+          const totalClass = (type.name === 'Common Crypt' && ((commonCryptInfo?.levels?.['5'] || 0) > 0 || (commonCryptInfo?.levels?.['10'] || 0) > 0)) ? 'player-red' : '';
+          rowsHtml += `<div class="cell" data-type="${type.name}"><span class="${totalCount === 0 ? 'count-zero' : ''} ${totalClass}">${totalCount || '-'}</span></div>`;
+
+          type.levels.forEach(level => {
+            const levelCount = typeInfo?.levels?.[level] || 0;
+            const badCrypt = (type.name === 'Common Crypt' && (level === 5 || level === 10) && levelCount > 0) ? 'player-red' : '';
+            rowsHtml += `<div class="cell level-cell" data-type="${type.name}" data-level="${level}"><span class="${levelCount === 0 ? 'count-zero' : ''} ${badCrypt}">${levelCount || '-'}</span></div>`;
+          });
+        });
+
+        rowsHtml += '</div>';
+      });
+
+      container.innerHTML = `<div class="chest-table">${headerHtml}${rowsHtml}</div>`;
+    }
+
+    function toggleType(typeName) {
+      const header = document.querySelector(`.type-total-header[data-type="${typeName}"]`);
+      const isExpanded = expandedTypes.has(typeName);
+
+      if (isExpanded) {
+        expandedTypes.delete(typeName);
+        header.classList.remove('expanded');
+      } else {
+        expandedTypes.add(typeName);
+        header.classList.add('expanded');
+      }
+
+      document.querySelectorAll(`[data-type="${typeName}"]`).forEach(el => {
+        if (el.classList.contains('level-header') || el.classList.contains('level-cell')) {
+          el.classList.toggle('visible');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
