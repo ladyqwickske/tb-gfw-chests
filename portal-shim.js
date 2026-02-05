@@ -59,4 +59,9 @@
   Object.defineProperty(window.google.script, 'run', {
     get() { return createRunner(); }
   });
+
+  // Helper function for Promise-based API calls
+  window.callFunction = function(functionName, args = []) {
+    return callApi(functionName, args);
+  };
 })();
