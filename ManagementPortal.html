@@ -37,7 +37,8 @@
     .chest-table { display: table; width: 100%; border-collapse: collapse; }
     .table-header { display: table-row; background: #f8f9fa; border-bottom: 2px solid #e8eaed; position: sticky; top: 0; z-index: 10; }
     .header-cell { display: table-cell; padding: 12px 8px; font-weight: 600; font-size: 11px; color: #5f6368; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; border-right: 1px solid #e8eaed; white-space: nowrap; position: sticky; top: 0; background: #f8f9fa; z-index: 2; }
-    .header-cell:first-child { text-align: left; position: sticky; left: 0; z-index: 3; min-width: 70px; background: #f8f9fa; }
+    .header-cell:first-child { text-align: center; position: sticky; left: 0; z-index: 3; min-width: 45px; max-width: 50px; width: 50px; background: #f8f9fa; }
+    .header-cell:nth-child(2) { text-align: left; position: sticky; left: 50px; z-index: 3; min-width: 150px; background: #f8f9fa; }
     .header-cell.rank-col { min-width: 45px !important; max-width: 50px !important; width: 50px !important; padding: 12px 4px; text-align: center !important; }
     .cell.rank-col { min-width: 45px !important; max-width: 50px !important; width: 50px !important; padding: 12px 4px; text-align: center !important; }
     .type-total-header { cursor: pointer; user-select: none; background: #e8eaed; font-weight: 600; }
@@ -49,8 +50,9 @@
     .player-row { display: table-row; border-bottom: 1px solid #e8eaed; }
     .player-row:hover { background: #f8f9fa; }
     .cell { display: table-cell; padding: 12px 8px; border-right: 1px solid #e8eaed; text-align: center; font-size: 13px; vertical-align: middle; white-space: nowrap; }
-    .cell:first-child { text-align: left; font-weight: 500; position: sticky; left: 0; background: white; z-index: 1; min-width: 150px; }
-    .player-row:hover .cell:first-child { background: #f8f9fa; }
+    .cell:first-child { text-align: center; font-weight: 500; position: sticky; left: 0; background: white; z-index: 1; min-width: 45px; max-width: 50px; width: 50px; }
+    .cell:nth-child(2) { text-align: left; font-weight: 500; position: sticky; left: 50px; background: white; z-index: 1; min-width: 150px; }
+    .player-row:hover .cell:first-child, .player-row:hover .cell:nth-child(2) { background: #f8f9fa; }
     .level-cell { background: #fafbfc; display: none; font-size: 12px; }
     .level-cell.visible { display: table-cell; }
     .count-zero { color: #dadce0; }
