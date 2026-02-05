@@ -306,7 +306,7 @@
         <div class="table-container">
           <div id="eventsLoading" class="loading"><div class="spinner"></div><p>Loading events...</p></div>
           <table id="eventsTable" style="display:none;">
-            <thead><tr><th>Event Name</th><th>Event Type</th><th>Start Date</th><th>End Date</th><th>Tracking Method</th><th>Actions</th></tr></thead>
+            <thead><tr><th class="sortable" data-sort="eventName">Event Name</th><th class="sortable" data-sort="eventType">Event Type</th><th class="sortable" data-sort="startDate">Start Date</th><th class="sortable" data-sort="endDate">End Date</th><th>Tracking Method</th><th>Actions</th></tr></thead>
             <tbody id="eventsTableBody"></tbody>
           </table>
           <div id="eventsEmpty" style="display:none; text-align:center; padding:40px; color:#7f8c8d;"><p>No events found. Create your first event!</p></div>
@@ -1119,21 +1119,95 @@
         renderEventsTable();
         document.getElementById('eventsTable').style.display='table';
       }
+      let eventSortConfig = { field: 'endDate', ascending: false };
+      
       function renderEventsTable() {
         const tbody = document.getElementById('eventsTableBody'); tbody.innerHTML='';
-        const sortedEvents = [...eventsData].sort((a,b)=> new Date(b.endDate)-new Date(a.endDate));
+        const sortedEvents = [...eventsData].sort((a,b)=> {
+          const aVal = a[eventSortConfig.field];
+          const bVal = b[eventSortConfig.field];
+          let comparison = 0;
+          if (aVal < bVal) comparison = -1;
+          if (aVal > bVal) comparison = 1;
+          return eventSortConfig.ascending ? comparison : -comparison;
+        });
         sortedEvents.forEach(event=>{
           const methodBadge = event.participationMethod==='chest-based' ? '<span class="badge chest">Chest-Based</span>' : '<span class="badge manual">Manual Entry</span>';
           const calcBtn = event.participationMethod==='chest-based' ? `<button class="btn action-btn" data-action="calc" data-event-name="${escapeHtml(event.eventName)}">🔄 Calc</button>` : '';
           const viewBtn = `<button class="btn action-btn" data-action="view" data-event-name="${escapeHtml(event.eventName)}">👁 View</button>`;
+          const editBtn = `<button class="btn action-btn" data-action="edit" data-event-name="${escapeHtml(event.eventName)}">✏️ Edit</button>`;
           const deleteBtn = `<button class="btn action-btn btn-secondary" data-action="delete" data-event-name="${escapeHtml(event.eventName)}">🗑️ Delete</button>`;
           const row = document.createElement('tr');
-          row.innerHTML = `<td class="event-name">${escapeHtml(event.eventName)}</td><td>${escapeHtml(event.eventType)}</td><td>${event.startDate}</td><td>${event.endDate}</td><td>${methodBadge}</td><td>${calcBtn}${viewBtn}${deleteBtn}</td>`;
+          row.innerHTML = `<td class="event-name">${escapeHtml(event.eventName)}</td><td>${escapeHtml(event.eventType)}</td><td>${event.startDate}</td><td>${event.endDate}</td><td>${methodBadge}</td><td>${calcBtn}${viewBtn}${editBtn}${deleteBtn}</td>`;
           tbody.appendChild(row);
         });
         tbody.querySelectorAll('button[data-action]').forEach(btn=>{
-          btn.addEventListener('click',function(){ const action=this.getAttribute('data-action'); const eventName=this.getAttribute('data-event-name'); if (action==='calc') calculateEventParticipation(eventName); if (action==='view') viewEventParticipation(eventName); if (action==='delete') deleteEvent(eventName); });
+          btn.addEventListener('click',function(){ const action=this.getAttribute('data-action'); const eventName=this.getAttribute('data-event-name'); if (action==='calc') calculateEventParticipation(eventName); if (action==='view') viewEventParticipation(eventName); if (action==='edit') editEvent(eventName); if (action==='delete') deleteEvent(eventName); });
         });
+        attachSortHandlers();
+      }
+      
+      function attachSortHandlers() {
+        document.querySelectorAll('th.sortable').forEach(th => {
+          th.style.cursor = 'pointer';
+          th.style.userSelect = 'none';
+          th.addEventListener('click', function() {
+            const field = this.getAttribute('data-sort');
+            if (eventSortConfig.field === field) {
+              eventSortConfig.ascending = !eventSortConfig.ascending;
+            } else {
+              eventSortConfig.field = field;
+              eventSortConfig.ascending = false;
+            }
+            renderEventsTable();
+          });
+          // Add visual indicator
+          if (eventSortConfig.field === th.getAttribute('data-sort')) {
+            th.textContent += eventSortConfig.ascending ? ' ↑' : ' ↓';
+          }
+        });
+      }
+      
+      function editEvent(eventName) {
+        const event = eventsData.find(e => e.eventName === eventName);
+        if (!event) { alert('Event not found.'); return; }
+        
+        const newStart = prompt(`Edit Start Date for "${eventName}":\n(Current: ${event.startDate})`, event.startDate);
+        if (newStart === null) return;
+        
+        const newEnd = prompt(`Edit End Date for "${eventName}":\n(Current: ${event.endDate})`, event.endDate);
+        if (newEnd === null) return;
+        
+        const status = document.createElement('div');
+        status.className = 'status';
+        status.textContent = `Updating event dates...`;
+        status.style.cssText = 'position:fixed; top:20px; right:20px; background:#fff; padding:14px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:1000; min-width:300px;';
+        document.body.appendChild(status);
+        
+        google.script.run
+          .withSuccessHandler((result) => {
+            if (result && result.success) {
+              status.textContent = '✓ ' + result.message;
+              status.classList.add('ok');
+              status.style.background = '#d4edda';
+              status.style.color = '#155724';
+              loadEvents();
+            } else {
+              status.textContent = '✕ ' + (result?.message || 'Failed to update event.');
+              status.classList.add('err');
+              status.style.background = '#f8d7da';
+              status.style.color = '#721c24';
+            }
+            setTimeout(() => status.remove(), 5000);
+          })
+          .withFailureHandler((error) => {
+            status.textContent = `✕ Error: ${error.message}`;
+            status.classList.add('err');
+            status.style.background = '#f8d7da';
+            status.style.color = '#721c24';
+            setTimeout(() => status.remove(), 5000);
+          })
+          .updateEventDates(eventName, newStart, newEnd);
       }
 
       function loadMembers() { google.script.run.withSuccessHandler((result)=>{ membersData = result||[]; populateMemberSelects(); }).getMembersList(); }
