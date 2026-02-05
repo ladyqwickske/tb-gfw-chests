@@ -1226,8 +1226,43 @@
         if (!eventName) { status.textContent='Please enter an event name.'; status.classList.add('err'); return; }
         if (!eventType) { status.textContent='Please select an event type.'; status.classList.add('err'); return; }
         if (!startDate || !endDate) { status.textContent='Please select start and end dates.'; status.classList.add('err'); return; }
-        status.textContent='Creating event...';
-        google.script.run.withSuccessHandler((result)=>{ if (result && result.success) { status.textContent=result.message; status.classList.add('ok'); document.getElementById('eventName').value=''; document.getElementById('eventType').value=''; document.getElementById('eventStartDate').value=''; document.getElementById('eventEndDate').value=''; loadEvents(); } else { status.textContent=result?.message||'Failed to create event.'; status.classList.add('err'); } }).withFailureHandler((error)=>{ status.textContent=`Error: ${error.message}`; status.classList.add('err'); }).addEvent(eventName,eventType,startDate,endDate);
+        
+        const isEditing = editingEventName !== null;
+        status.textContent = isEditing ? 'Updating event...' : 'Creating event...';
+        
+        const onSuccess = (result) => {
+          if (result && result.success) {
+            status.textContent = result.message;
+            status.classList.add('ok');
+            document.getElementById('eventName').value = '';
+            document.getElementById('eventType').value = '';
+            document.getElementById('eventStartDate').value = '';
+            document.getElementById('eventEndDate').value = '';
+            document.querySelector('button[onclick="EventsTab.submitCreateEvent()"]').textContent = '🎯 Create Event';
+            editingEventName = null;
+            loadEvents();
+          } else {
+            status.textContent = result?.message || (isEditing ? 'Failed to update event.' : 'Failed to create event.');
+            status.classList.add('err');
+          }
+        };
+        
+        const onError = (error) => {
+          status.textContent = `Error: ${error.message}`;
+          status.classList.add('err');
+        };
+        
+        if (isEditing) {
+          google.script.run
+            .withSuccessHandler(onSuccess)
+            .withFailureHandler(onError)
+            .updateEvent(editingEventName, eventName, eventType, startDate, endDate);
+        } else {
+          google.script.run
+            .withSuccessHandler(onSuccess)
+            .withFailureHandler(onError)
+            .addEvent(eventName, eventType, startDate, endDate);
+        }
       }
       function onChestEventSelected() {
         const eventName = document.getElementById('chestEventSelect').value;
