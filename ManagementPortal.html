@@ -1168,46 +1168,22 @@
         });
       }
       
+      let editingEventName = null;
+      
       function editEvent(eventName) {
         const event = eventsData.find(e => e.eventName === eventName);
         if (!event) { alert('Event not found.'); return; }
         
-        const newStart = prompt(`Edit Start Date for "${eventName}":\n(Current: ${event.startDate})`, event.startDate);
-        if (newStart === null) return;
+        editingEventName = eventName;
+        document.getElementById('eventName').value = event.eventName;
+        document.getElementById('eventType').value = event.eventType;
+        document.getElementById('eventStartDate').value = event.startDate;
+        document.getElementById('eventEndDate').value = event.endDate;
         
-        const newEnd = prompt(`Edit End Date for "${eventName}":\n(Current: ${event.endDate})`, event.endDate);
-        if (newEnd === null) return;
+        const submitBtn = document.querySelector('button[onclick="EventsTab.submitCreateEvent()"]');
+        submitBtn.textContent = '💾 Update Event';
         
-        const status = document.createElement('div');
-        status.className = 'status';
-        status.textContent = `Updating event dates...`;
-        status.style.cssText = 'position:fixed; top:20px; right:20px; background:#fff; padding:14px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:1000; min-width:300px;';
-        document.body.appendChild(status);
-        
-        google.script.run
-          .withSuccessHandler((result) => {
-            if (result && result.success) {
-              status.textContent = '✓ ' + result.message;
-              status.classList.add('ok');
-              status.style.background = '#d4edda';
-              status.style.color = '#155724';
-              loadEvents();
-            } else {
-              status.textContent = '✕ ' + (result?.message || 'Failed to update event.');
-              status.classList.add('err');
-              status.style.background = '#f8d7da';
-              status.style.color = '#721c24';
-            }
-            setTimeout(() => status.remove(), 5000);
-          })
-          .withFailureHandler((error) => {
-            status.textContent = `✕ Error: ${error.message}`;
-            status.classList.add('err');
-            status.style.background = '#f8d7da';
-            status.style.color = '#721c24';
-            setTimeout(() => status.remove(), 5000);
-          })
-          .updateEventDates(eventName, newStart, newEnd);
+        EventsTab.switchTab('createTab');
       }
 
       function loadMembers() { google.script.run.withSuccessHandler((result)=>{ membersData = result||[]; populateMemberSelects(); }).getMembersList(); }
