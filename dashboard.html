@@ -197,9 +197,20 @@
     }
     
     .header-cell:first-child {
-      text-align: left;
+      text-align: center;
       position: sticky;
       left: 0;
+      z-index: 3;
+      min-width: 45px;
+      max-width: 50px;
+      width: 50px;
+      background: #f8f9fa;
+    }
+    
+    .header-cell:nth-child(2) {
+      text-align: left;
+      position: sticky;
+      left: 50px;
       z-index: 3;
       min-width: 70px;
       background: #f8f9fa;
@@ -273,16 +284,29 @@
     }
     
     .cell:first-child {
-      text-align: left;
+      text-align: center;
       font-weight: 500;
       position: sticky;
       left: 0;
       background: white;
       z-index: 1;
+      min-width: 45px;
+      max-width: 50px;
+      width: 50px;
+    }
+    
+    .cell:nth-child(2) {
+      text-align: left;
+      font-weight: 500;
+      position: sticky;
+      left: 50px;
+      background: white;
+      z-index: 1;
       min-width: 70px;
     }
     
-    .player-row:hover .cell:first-child {
+    .player-row:hover .cell:first-child,
+    .player-row:hover .cell:nth-child(2) {
       background: #f8f9fa;
     }
     
