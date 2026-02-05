@@ -1253,15 +1253,13 @@
         };
         
         if (isEditing) {
-          google.script.run
-            .withSuccessHandler(onSuccess)
-            .withFailureHandler(onError)
-            .updateEvent(editingEventName, eventName, eventType, startDate, endDate);
+          callFunction('updateEvent', [editingEventName, eventName, eventType, startDate, endDate])
+            .then(onSuccess)
+            .catch(onError);
         } else {
-          google.script.run
-            .withSuccessHandler(onSuccess)
-            .withFailureHandler(onError)
-            .addEvent(eventName, eventType, startDate, endDate);
+          callFunction('addEvent', [eventName, eventType, startDate, endDate])
+            .then(onSuccess)
+            .catch(onError);
         }
       }
       function onChestEventSelected() {
