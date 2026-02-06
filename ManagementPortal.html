@@ -182,6 +182,24 @@
     #points .type-cell { font-weight: 500; min-width: 140px; }
     #points .level-cell { min-width: 160px; display: table-cell !important; }
     #points .points-cell { text-align: center; font-weight: 600; color: #1a73e8; width: 80px; }
+
+    /* Troops Tab */
+    #troops .form-group { margin-bottom: 16px; }
+    #troops textarea { width: 100%; padding: 10px 12px; border: 1px solid #dadce0; border-radius: 6px; font-size: 14px; transition: border-color 0.2s, box-shadow 0.2s; font-family: inherit; resize: vertical; }
+    #troops textarea:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 3px rgba(26,115,232,0.15); }
+    #troops .history-table { background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e8eaed; margin-top: 12px; }
+    #troops .table-header { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; background: #f8f9fa; border-bottom: 2px solid #e8eaed; padding: 12px 16px; font-weight: 600; font-size: 12px; color: #5f6368; text-transform: uppercase; letter-spacing: 0.5px; }
+    #troops .table-row { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; padding: 12px 16px; border-bottom: 1px solid #e8eaed; font-size: 13px; }
+    #troops .table-row:hover { background: #f8f9fa; }
+    #troops .table-cell.timestamp { color: #5f6368; font-size: 12px; }
+    #troops .table-cell.level { font-weight: 600; color: #1a73e8; }
+    #troops .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    #troops .summary-card { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); border: 1px solid #e8eaed; }
+    #troops .summary-card-player { font-weight: 600; font-size: 14px; margin-bottom: 12px; color: #202124; border-bottom: 2px solid #1a73e8; padding-bottom: 8px; }
+    #troops .summary-card-level { font-size: 20px; font-weight: 600; display: inline-block; width: 50px; text-align: center; }
+    #troops .summary-card-label { font-size: 11px; color: #5f6368; display: inline-block; width: 50px; text-align: center; margin-right: 8px; }
+    #troops .summary-card-crypt { margin-top: 12px; padding-top: 12px; border-top: 1px solid #e8eaed; background: #fff3e0; padding: 8px; border-radius: 4px; font-size: 13px; font-weight: 500; color: #e65100; text-align: center; }
+    #troops .no-data { padding: 32px 16px; text-align: center; color: #5f6368; font-size: 14px; }
     
     /* READ-ONLY MODE STYLES */
     .read-only-mode input,
@@ -254,6 +272,7 @@
         <button class="tab-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
         <button class="tab-btn" onclick="switchTab('events')">🎯 Events</button>
         <button class="tab-btn" onclick="switchTab('members')">👥 Members</button>
+        <button class="tab-btn" onclick="switchTab('troops')">⚔️ Troops</button>
         <button class="tab-btn" onclick="switchTab('progress')">📈 Progress</button>
         <button class="tab-btn" onclick="switchTab('compensation')">💰 Compensation</button>
         <button class="tab-btn" onclick="switchTab('points')">📋 Points Reference</button>
@@ -417,6 +436,86 @@
         <tbody id="membersTableBody"></tbody>
       </table>
       <div id="memberEmpty" class="loading" style="display:none;">No members match your search criteria</div>
+    </div>
+  </div>
+
+  <!-- TROOPS TAB -->
+  <div id="troops" class="tab-content">
+    <div class="header">
+      <h1>⚔️ Troop Level Tracker</h1>
+      <p>Track and manage troop levels (G, M, S, E) and crypt levels for each member</p>
+    </div>
+
+    <div class="tabs-container">
+      <div class="tabs">
+        <button class="tab active" onclick="TroopsTab.switchSubTab('entry')">Add Entry</button>
+        <button class="tab" onclick="TroopsTab.switchSubTab('player')">View Player History</button>
+        <button class="tab" onclick="TroopsTab.switchSubTab('summary')">All Members Summary</button>
+      </div>
+
+      <!-- ADD ENTRY SUB-TAB -->
+      <div id="troopEntry" class="tab-content active">
+        <div class="form-group">
+          <label for="troopPlayerName">Player Name *</label>
+          <select id="troopPlayerName" required onchange="TroopsTab.updatePlayerHistory()">
+            <option value="">-- Select Player --</option>
+          </select>
+        </div>
+
+        <div class="form-grid">
+          <div>
+            <label for="troopType">Type *</label>
+            <select id="troopType" required>
+              <option value="">-- Select Type --</option>
+              <option value="G">Guardsmen (G)</option>
+              <option value="M">Monsters (M)</option>
+              <option value="S">Specialists (S)</option>
+              <option value="E">Engineering (E)</option>
+              <option value="C">Crypt (C)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="troopLevel">Level *</label>
+            <input type="number" id="troopLevel" required min="0" placeholder="e.g., 45" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="troopNotes">Notes</label>
+          <textarea id="troopNotes" rows="2" placeholder="Any additional notes..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn" onclick="TroopsTab.submitTroopEntry()">Add Entry</button>
+          <button type="button" class="btn-secondary" onclick="TroopsTab.resetTroopForm()">Clear</button>
+        </div>
+
+        <div id="troopEntryMessage" class="status" style="margin-top: 8px;"></div>
+
+        <div id="troopPlayerHistoryContainer" style="margin-top: 20px; display: none;">
+          <h2>Recent History for Selected Player</h2>
+          <div id="troopPlayerHistoryTable"></div>
+        </div>
+      </div>
+
+      <!-- PLAYER HISTORY SUB-TAB -->
+      <div id="troopPlayer" class="tab-content">
+        <div class="form-group">
+          <label for="troopHistoryPlayerSelect">Select Player</label>
+          <select id="troopHistoryPlayerSelect" onchange="TroopsTab.loadPlayerHistory()">
+            <option value="">-- Select Player --</option>
+          </select>
+        </div>
+
+        <div id="troopPlayerHistoryContent"></div>
+      </div>
+
+      <!-- SUMMARY SUB-TAB -->
+      <div id="troopSummary" class="tab-content">
+        <h2>All Members - Latest Troop Levels</h2>
+        <div id="troopSummaryContent" class="loading">Loading...</div>
+      </div>
     </div>
   </div>
 
@@ -870,6 +969,7 @@
       document.getElementById('readOnlyBadge').style.display = 'block';
     }
     let membersInitialized = false;
+    let troopsInitialized = false;
     let progressInitialized = false;
     let compensationInitialized = false;
 
@@ -892,7 +992,7 @@
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.getElementById(tabId)?.classList.add('active');
-      const tabNames = ['dashboard','events','members','progress','points'];
+      const tabNames = ['dashboard','events','members','troops','progress','compensation','points'];
       const idx = tabNames.indexOf(tabId);
       const btns = document.querySelectorAll('.tab-btn');
       if (idx >= 0 && btns[idx]) btns[idx].classList.add('active');
@@ -911,6 +1011,7 @@
         }
       }
       if (tabId === 'members' && !membersInitialized) { membersInitialized = true; MembersTab.init(); }
+      if (tabId === 'troops' && !troopsInitialized) { troopsInitialized = true; TroopsTab.init(); }
       if (tabId === 'progress' && !progressInitialized) { progressInitialized = true; ProgressTab.init(); }
       if (tabId === 'compensation' && !compensationInitialized) { compensationInitialized = true; CompensationTab.init(); }
     }
@@ -1600,6 +1701,239 @@
       function showTable() { document.getElementById('memberLoading').style.display='none'; document.getElementById('memberError').style.display='none'; document.getElementById('membersTable').style.display='table'; document.getElementById('memberEmpty').style.display='none'; }
       function showEmpty() { document.getElementById('memberLoading').style.display='none'; document.getElementById('memberError').style.display='none'; document.getElementById('membersTable').style.display='none'; document.getElementById('memberEmpty').style.display='block'; }
       return { init, loadMembers, switchTab, submitMightEntry, submitAddMember, submitNameChange, submitRemoveMember };
+    })();
+
+    // Troops Tab
+    const TroopsTab = (() => {
+      function init() {
+        loadPlayerList();
+        loadPlayerHistoryList();
+      }
+
+      function switchSubTab(tabName) {
+        document.querySelectorAll('#troops .tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('#troops .tab').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('troop' + tabName.charAt(0).toUpperCase() + tabName.slice(1)).classList.add('active');
+        event.target.classList.add('active');
+        if (tabName === 'summary') {
+          loadTroopSummary();
+        }
+      }
+
+      function loadPlayerList() {
+        google.script.run
+          .withSuccessHandler(members => {
+            const select = document.getElementById('troopPlayerName');
+            select.innerHTML = '<option value="">-- Select Player --</option>';
+            members.forEach(member => {
+              const option = document.createElement('option');
+              option.value = member;
+              option.textContent = member;
+              select.appendChild(option);
+            });
+          })
+          .getTroopMembersForForm();
+      }
+
+      function loadPlayerHistoryList() {
+        google.script.run
+          .withSuccessHandler(members => {
+            const select = document.getElementById('troopHistoryPlayerSelect');
+            select.innerHTML = '<option value="">-- Select Player --</option>';
+            members.forEach(member => {
+              const option = document.createElement('option');
+              option.value = member;
+              option.textContent = member;
+              select.appendChild(option);
+            });
+          })
+          .getTroopMembersForForm();
+      }
+
+      function showStatus(message, type) {
+        const el = document.getElementById('troopEntryMessage');
+        el.textContent = message;
+        el.className = 'status ' + type;
+        if (type === 'ok') {
+          setTimeout(() => { el.className = 'status'; }, 4000);
+        }
+      }
+
+      function submitTroopEntry() {
+        const playerName = document.getElementById('troopPlayerName').value;
+        const troopType = document.getElementById('troopType').value;
+        const troopLevel = document.getElementById('troopLevel').value;
+        const notes = document.getElementById('troopNotes').value;
+
+        if (!playerName || !troopType || !troopLevel) {
+          showStatus('Please fill in all required fields.', 'err');
+          return;
+        }
+
+        google.script.run
+          .withSuccessHandler(result => {
+            if (result.success) {
+              showStatus(result.message, 'ok');
+              resetTroopForm();
+              updatePlayerHistory();
+            } else {
+              showStatus(result.message, 'err');
+            }
+          })
+          .withFailureHandler(error => {
+            showStatus('Error: ' + error.toString(), 'err');
+          })
+          .addTroopEntry(playerName, troopType, parseInt(troopLevel), notes);
+      }
+
+      function resetTroopForm() {
+        document.getElementById('troopPlayerName').value = '';
+        document.getElementById('troopType').value = '';
+        document.getElementById('troopLevel').value = '';
+        document.getElementById('troopNotes').value = '';
+        document.getElementById('troopPlayerHistoryContainer').style.display = 'none';
+        document.getElementById('troopEntryMessage').className = 'status';
+      }
+
+      function updatePlayerHistory() {
+        const playerName = document.getElementById('troopPlayerName').value;
+        if (!playerName) {
+          document.getElementById('troopPlayerHistoryContainer').style.display = 'none';
+          return;
+        }
+
+        google.script.run
+          .withSuccessHandler(history => {
+            const container = document.getElementById('troopPlayerHistoryContainer');
+            const tableDiv = document.getElementById('troopPlayerHistoryTable');
+
+            if (history.length === 0) {
+              tableDiv.innerHTML = '<div class="no-data">No history yet for this player</div>';
+              container.style.display = 'block';
+              return;
+            }
+
+            let html = '<div class="history-table">';
+            html += '<div class="table-header"><div>Date</div><div>Type</div><div>Level</div><div>Notes</div></div>';
+
+            history.slice(0, 10).forEach(entry => {
+              const date = new Date(entry.timestamp).toLocaleString();
+              html += `<div class="table-row">
+                <div class="table-cell timestamp">${date}</div>
+                <div class="table-cell">${entry.type}</div>
+                <div class="table-cell level">${entry.level}</div>
+                <div class="table-cell">${entry.notes || '-'}</div>
+              </div>`;
+            });
+
+            html += '</div>';
+            tableDiv.innerHTML = html;
+            container.style.display = 'block';
+          })
+          .getTroopHistory(playerName);
+      }
+
+      function loadPlayerHistory() {
+        const playerName = document.getElementById('troopHistoryPlayerSelect').value;
+        const contentDiv = document.getElementById('troopPlayerHistoryContent');
+
+        if (!playerName) {
+          contentDiv.innerHTML = '';
+          return;
+        }
+
+        google.script.run
+          .withSuccessHandler(history => {
+            if (history.length === 0) {
+              contentDiv.innerHTML = '<div class="no-data">No history found for this player</div>';
+              return;
+            }
+
+            google.script.run
+              .withSuccessHandler(latest => {
+                let html = '<div style="margin-bottom: 20px;">';
+                html += '<h2 style="font-size: 14px; margin-bottom: 12px;">Latest Levels</h2>';
+                html += '<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">';
+
+                const types = ['G', 'M', 'S', 'E', 'C'];
+                types.forEach(type => {
+                  const level = latest[type];
+                  const display = level !== null ? level : '-';
+                  const bgColor = type === 'C' ? '#fff3e0' : 'white';
+                  const borderColor = type === 'C' ? '#ffe0b2' : '#e8eaed';
+                  const textColor = type === 'C' ? '#e65100' : '#5f6368';
+                  const textWeight = type === 'C' ? 'bold' : '500';
+                  html += `<div style="padding: 12px; background: ${bgColor}; border: 1px solid ${borderColor}; border-radius: 4px; text-align: center;">
+                    <div style="font-size: 12px; color: ${textColor}; font-weight: ${textWeight};">${type}</div>
+                    <div style="font-size: 20px; font-weight: 600; color: #1a73e8;">${display}</div>
+                  </div>`;
+                });
+
+                html += '</div></div>';
+
+                html += '<div class="history-table">';
+                html += '<div class="table-header"><div>Date</div><div>Type</div><div>Level</div><div>Notes</div></div>';
+
+                history.forEach(entry => {
+                  const date = new Date(entry.timestamp).toLocaleString();
+                  html += `<div class="table-row">
+                    <div class="table-cell timestamp">${date}</div>
+                    <div class="table-cell">${entry.type}</div>
+                    <div class="table-cell level">${entry.level}</div>
+                    <div class="table-cell">${entry.notes || '-'}</div>
+                  </div>`;
+                });
+
+                html += '</div>';
+                contentDiv.innerHTML = html;
+              })
+              .getLatestTroopLevels(playerName);
+          })
+          .getTroopHistory(playerName);
+      }
+
+      function loadTroopSummary() {
+        const contentDiv = document.getElementById('troopSummaryContent');
+        contentDiv.className = 'loading';
+        contentDiv.textContent = 'Loading...';
+
+        google.script.run
+          .withSuccessHandler(summary => {
+            if (summary.length === 0) {
+              contentDiv.innerHTML = '<div class="no-data">No troop data available yet</div>';
+              return;
+            }
+
+            let html = '<div class="summary-grid">';
+
+            summary.forEach(member => {
+              html += '<div class="summary-card">';
+              html += `<div class="summary-card-player">${member.playerName}</div>`;
+
+              const types = ['G', 'M', 'S', 'E'];
+              types.forEach(type => {
+                const level = member[type];
+                html += `<div class="summary-card-level" style="color: ${level ? '#1a73e8' : '#dadce0'}">${level || '-'}</div>`;
+                html += `<div class="summary-card-label">${type}</div>`;
+              });
+
+              if (member.C) {
+                html += `<div class="summary-card-crypt">🔗 Crypt: ${member.C}</div>`;
+              }
+
+              html += '</div>';
+            });
+
+            html += '</div>';
+            contentDiv.innerHTML = html;
+          })
+          .withFailureHandler(error => {
+            contentDiv.innerHTML = '<div class="no-data">Error loading summary: ' + error.toString() + '</div>';
+          })
+          .getAllTroopLevelsSummary();
+      }
+
+      return { init, switchSubTab, submitTroopEntry, resetTroopForm, updatePlayerHistory, loadPlayerHistory, loadTroopSummary };
     })();
 
     // Progress Tab
