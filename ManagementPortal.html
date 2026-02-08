@@ -96,7 +96,11 @@
     #events .status, #members .status, #troops .status { font-size: 13px; margin-top: 8px; }
     #events .status.ok, #members .status.ok, #troops .status.ok { color: #1b5e20; }
     #events .status.err, #members .status.err, #troops .status.err { color: #c62828; }
-    #events .table-container, #members .table-container, #progress .table-container, #troops .table-container { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: auto; margin-top: 16px; }
+    #events .table-container, #members .table-container, #progress .table-container, #troops .table-container { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: auto; margin-top: 16px; max-height: 70vh; }
+    #events .table-container::-webkit-scrollbar, #members .table-container::-webkit-scrollbar, #progress .table-container::-webkit-scrollbar, #troops .table-container::-webkit-scrollbar { width: 12px; height: 12px; }
+    #events .table-container::-webkit-scrollbar-track, #members .table-container::-webkit-scrollbar-track, #progress .table-container::-webkit-scrollbar-track, #troops .table-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 6px; }
+    #events .table-container::-webkit-scrollbar-thumb, #members .table-container::-webkit-scrollbar-thumb, #progress .table-container::-webkit-scrollbar-thumb, #troops .table-container::-webkit-scrollbar-thumb { background: #888; border-radius: 6px; }
+    #events .table-container::-webkit-scrollbar-thumb:hover, #members .table-container::-webkit-scrollbar-thumb:hover, #progress .table-container::-webkit-scrollbar-thumb:hover, #troops .table-container::-webkit-scrollbar-thumb:hover { background: #555; }
     #events table, #members table, #progress table, #troops table { width: 100%; border-collapse: collapse; }
     #troops #troopMembersTable { table-layout: fixed; }
     #events thead, #members thead, #progress thead, #troops thead { background-color: #f8f9fa; position: sticky; top: 0; z-index: 10; }
