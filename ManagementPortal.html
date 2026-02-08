@@ -69,49 +69,68 @@
     .date-range-display { margin-top: 12px; padding: 8px 12px; background: #e8f0fe; border-radius: 4px; font-size: 13px; color: #1967d2; font-weight: 500; }
 
     /* Events Tab */
-    #events .header, #members .header, #progress .header { background: white; color: #202124; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); border: 1px solid #e8eaed; }
-    #events .header h1, #members .header h1, #progress .header h1 { margin: 0 0 4px 0; font-weight: 600; color: #1a73e8; }
-    #events .header p, #members .header p, #progress .header p { font-size: 13px; color: #5f6368; }
-    #events .tabs-container, #members .tabs-container { background: white; border-radius: 8px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); border: 1px solid #e8eaed; overflow: hidden; }
-    #events .tabs, #members .tabs { display: flex; background: #f8f9fa; border-bottom: 1px solid #e8eaed; }
-    #events .tab, #members .tab { flex: 1; padding: 12px 20px; text-align: center; cursor: pointer; border: none; background: none; font-size: 14px; font-weight: 600; color: #5f6368; transition: all 0.2s; border-bottom: 3px solid transparent; }
-    #events .tab:hover, #members .tab:hover { background: #fff; color: #1a73e8; }
-    #events .tab.active, #members .tab.active { background: white; color: #1a73e8; border-bottom-color: #1a73e8; }
-    #events .tab-content, #members .tab-content { display: none; padding: 16px; }
-    #events .tab-content.active, #members .tab-content.active { display: block; }
-    #events .form-grid, #members .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px; }
-    #events label, #members label { display: block; font-size: 12px; font-weight: 600; color: #5f6368; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.4px; }
+    #events .header, #members .header, #progress .header, #troops .header { background: white; color: #202124; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); border: 1px solid #e8eaed; }
+    #events .header h1, #members .header h1, #progress .header h1, #troops .header h1 { margin: 0 0 4px 0; font-weight: 600; color: #1a73e8; }
+    #events .header p, #members .header p, #progress .header p, #troops .header p { font-size: 13px; color: #5f6368; }
+    #events .tabs-container, #members .tabs-container, #troops .tabs-container { background: white; border-radius: 8px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); border: 1px solid #e8eaed; overflow: hidden; }
+    #events .tabs, #members .tabs, #troops .tabs { display: flex; background: #f8f9fa; border-bottom: 1px solid #e8eaed; }
+    #events .tab, #members .tab, #troops .tab { flex: 1; padding: 12px 20px; text-align: center; cursor: pointer; border: none; background: none; font-size: 14px; font-weight: 600; color: #5f6368; transition: all 0.2s; border-bottom: 3px solid transparent; }
+    #events .tab:hover, #members .tab:hover, #troops .tab:hover { background: #fff; color: #1a73e8; }
+    #events .tab.active, #members .tab.active, #troops .tab.active { background: white; color: #1a73e8; border-bottom-color: #1a73e8; }
+    #events .tab-content, #members .tab-content, #troops .tab-content { display: none; padding: 16px; }
+    #events .tab-content.active, #members .tab-content.active, #troops .tab-content.active { display: block; }
+    #events .form-grid, #members .form-grid, #troops .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px; }
+    #events label, #members label, #troops label { display: block; font-size: 12px; font-weight: 600; color: #5f6368; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.4px; }
     #events select, #events input[type="date"], #events input[type="number"], #events input[type="text"],
-    #members select, #members input[type="date"], #members input[type="number"], #members input[type="text"] {
+    #members select, #members input[type="date"], #members input[type="number"], #members input[type="text"],
+    #troops select, #troops input[type="date"], #troops input[type="number"], #troops input[type="text"], #troops textarea {
       width: 100%; padding: 10px 12px; border: 1px solid #dadce0; border-radius: 6px; font-size: 14px; transition: border-color 0.2s, box-shadow 0.2s; background: #fff;
     }
     #events select:focus, #events input:focus,
-    #members select:focus, #members input:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 3px rgba(26,115,232,0.15); }
-    #events .btn, #members .btn, #progress .btn { padding: 10px 16px; border: 1px solid #1a73e8; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: #1a73e8; color: white; }
-    #events .btn:hover, #members .btn:hover, #progress .btn:hover { background: #1765c1; box-shadow: 0 1px 4px rgba(26,115,232,0.4); }
-    #events .btn-secondary { background: #5f6368; border-color: #5f6368; }
-    #events .btn-secondary:hover { background: #3c4043; }
-    #events .status, #members .status { font-size: 13px; margin-top: 8px; }
-    #events .status.ok, #members .status.ok { color: #1b5e20; }
-    #events .status.err, #members .status.err { color: #c62828; }
-    #events .table-container, #members .table-container, #progress .table-container { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; margin-top: 16px; }
-    #events table, #members table, #progress table { width: 100%; border-collapse: collapse; }
-    #events thead, #members thead, #progress thead { background-color: #f8f9fa; position: sticky; top: 0; z-index: 10; }
-    #events th, #members th, #progress th { padding: 15px; text-align: left; font-size: 12px; font-weight: 600; color: #7f8c8d; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e1e8ed; }
+    #members select:focus, #members input:focus,
+    #troops select:focus, #troops input:focus, #troops textarea:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 3px rgba(26,115,232,0.15); }
+    #events .btn, #members .btn, #progress .btn, #troops .btn { padding: 10px 16px; border: 1px solid #1a73e8; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: #1a73e8; color: white; }
+    #events .btn:hover, #members .btn:hover, #progress .btn:hover, #troops .btn:hover { background: #1765c1; box-shadow: 0 1px 4px rgba(26,115,232,0.4); }
+    #events .btn-secondary, #troops .btn-secondary { background: #5f6368; border-color: #5f6368; }
+    #events .btn-secondary:hover, #troops .btn-secondary:hover { background: #3c4043; }
+    #events .status, #members .status, #troops .status { font-size: 13px; margin-top: 8px; }
+    #events .status.ok, #members .status.ok, #troops .status.ok { color: #1b5e20; }
+    #events .status.err, #members .status.err, #troops .status.err { color: #c62828; }
+    #events .table-container, #members .table-container, #progress .table-container, #troops .table-container { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: auto; margin-top: 16px; }
+    #events table, #members table, #progress table, #troops table { width: 100%; border-collapse: collapse; }
+    #events thead, #members thead, #progress thead, #troops thead { background-color: #f8f9fa; position: sticky; top: 0; z-index: 10; }
+    #events th, #members th, #progress th, #troops th { padding: 15px; text-align: left; font-size: 12px; font-weight: 600; color: #7f8c8d; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e1e8ed; }
     #events th.rank-col, #members th.rank-col, #progress th.rank-col { width: 50px; max-width: 50px; min-width: 45px; padding: 15px 4px; text-align: center !important; }
-    #events td, #members td, #progress td { padding: 15px; font-size: 14px; }
+    #events td, #members td, #progress td, #troops td { padding: 15px; font-size: 14px; }
     #events td.rank-col, #members td.rank-col, #progress td.rank-col { width: 50px; max-width: 50px; min-width: 45px; padding: 15px 4px; text-align: center !important; }
-    #events tbody tr, #members tbody tr, #progress tbody tr { border-bottom: 1px solid #e1e8ed; transition: background-color 0.2s; }
-    #events tbody tr:hover, #members tbody tr:hover, #progress tbody tr:hover { background-color: #f8f9ff; }
+    #events tbody tr, #members tbody tr, #progress tbody tr, #troops tbody tr { border-bottom: 1px solid #e1e8ed; transition: background-color 0.2s; }
+    #events tbody tr:hover, #members tbody tr:hover, #progress tbody tr:hover, #troops tbody tr:hover { background-color: #f8f9ff; }
+    #events th:first-child, #members th:first-child, #progress th:first-child, #troops th:first-child {
+      position: sticky;
+      left: 0;
+      background: #f8f9fa;
+      z-index: 11;
+    }
+    #events td:first-child, #members td:first-child, #progress td:first-child, #troops td:first-child {
+      position: sticky;
+      left: 0;
+      background: white;
+      z-index: 10;
+    }
+    #events tbody tr:hover td:first-child, #members tbody tr:hover td:first-child, #progress tbody tr:hover td:first-child, #troops tbody tr:hover td:first-child {
+      background-color: #f8f9ff;
+    }
+    #troops th.center, #troops td.center { text-align: center; }
+    #troops th.crypt-col, #troops td.crypt-col { width: auto; max-width: none; min-width: auto; }
     #events .badge.chest { background: #d4edda; color: #155724; }
     #events .badge.manual { background: #cce5ff; color: #004085; }
     #events .action-btn { padding: 6px 12px; font-size: 12px; margin-right: 4px; }
     #events .checkbox-item { padding: 6px 0; display: flex; align-items: center; gap: 8px; }
     #events .checkbox-item label { margin: 0; text-transform: none; font-weight: normal; font-size: 14px; color: #202124; cursor: pointer; }
-    #events .sortable { cursor: pointer; user-select: none; position: relative; padding-right: 20px; }
-    #events .sortable::after { content: '⇅'; position: absolute; right: 5px; opacity: 0.3; font-size: 10px; }
-    #events .sortable.asc::after { content: '▲'; opacity: 1; }
-    #events .sortable.desc::after { content: '▼'; opacity: 1; }
+    #events .sortable, #troops .sortable { cursor: pointer; user-select: none; position: relative; padding-right: 20px; }
+    #events .sortable::after, #troops .sortable::after { content: '⇅'; position: absolute; right: 5px; opacity: 0.3; font-size: 10px; }
+    #events .sortable.asc::after, #troops .sortable.asc::after { content: '▲'; opacity: 1; }
+    #events .sortable.desc::after, #troops .sortable.desc::after { content: '▼'; opacity: 1; }
     #events .filter-row { background: #f8f9fa; }
     #events .filter-select { width: 100%; padding: 6px 8px; border: 1px solid #dadce0; border-radius: 4px; font-size: 12px; background: white; }
     #events .filter-select:focus { outline: none; border-color: #1a73e8; }
@@ -176,12 +195,30 @@
     #points .points-reference-table { background: white; border-radius: 8px; padding: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.12); overflow-x: auto; display: inline-block; }
     #points .points-table { width: auto; border-collapse: collapse; }
     #points .points-table thead { background: #f8f9fa; border-bottom: 2px solid #e8eaed; }
-    #points .points-table th { padding: 12px 16px; text-align: left; font-weight: 600; font-size: 12px; color: #5f6368; text-transform: uppercase; letter-spacing: 0.5px; }
+    #points .points-table th { padding: 12px 16px; text-align: left; font-weight: 600; font-size: 12px; color: #5f6368; text-transform: uppercase; letter-spacing: 0.5px; position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
     #points .points-table td { padding: 12px 16px; border-bottom: 1px solid #e8eaed; font-size: 13px; color: #202124; }
     #points .points-table tbody tr:hover { background: #f8f9fa; }
     #points .type-cell { font-weight: 500; min-width: 140px; }
     #points .level-cell { min-width: 160px; display: table-cell !important; }
     #points .points-cell { text-align: center; font-weight: 600; color: #1a73e8; width: 80px; }
+
+    /* Troops Tab */
+    #troops .form-group { margin-bottom: 16px; }
+    #troops textarea { width: 100%; padding: 10px 12px; border: 1px solid #dadce0; border-radius: 6px; font-size: 14px; transition: border-color 0.2s, box-shadow 0.2s; font-family: inherit; resize: vertical; }
+    #troops textarea:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 3px rgba(26,115,232,0.15); }
+    #troops .history-table { background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e8eaed; margin-top: 12px; }
+    #troops .table-header { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; background: #f8f9fa; border-bottom: 2px solid #e8eaed; padding: 12px 16px; font-weight: 600; font-size: 12px; color: #5f6368; text-transform: uppercase; letter-spacing: 0.5px; }
+    #troops .table-row { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; padding: 12px 16px; border-bottom: 1px solid #e8eaed; font-size: 13px; }
+    #troops .table-row:hover { background: #f8f9fa; }
+    #troops .table-cell.timestamp { color: #5f6368; font-size: 12px; }
+    #troops .table-cell.level { font-weight: 600; color: #1a73e8; }
+    #troops .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    #troops .summary-card { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); border: 1px solid #e8eaed; }
+    #troops .summary-card-player { font-weight: 600; font-size: 14px; margin-bottom: 12px; color: #202124; border-bottom: 2px solid #1a73e8; padding-bottom: 8px; }
+    #troops .summary-card-level { font-size: 20px; font-weight: 600; display: inline-block; width: 50px; text-align: center; }
+    #troops .summary-card-label { font-size: 11px; color: #5f6368; display: inline-block; width: 50px; text-align: center; margin-right: 8px; }
+    #troops .summary-card-crypt { margin-top: 12px; padding-top: 12px; border-top: 1px solid #e8eaed; background: #fff3e0; padding: 8px; border-radius: 4px; font-size: 13px; font-weight: 500; color: #e65100; text-align: center; }
+    #troops .no-data { padding: 32px 16px; text-align: center; color: #5f6368; font-size: 14px; }
     
     /* READ-ONLY MODE STYLES */
     .read-only-mode input,
@@ -254,6 +291,7 @@
         <button class="tab-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
         <button class="tab-btn" onclick="switchTab('events')">🎯 Events</button>
         <button class="tab-btn" onclick="switchTab('members')">👥 Members</button>
+        <button class="tab-btn" onclick="switchTab('troops')">⚔️ Troops</button>
         <button class="tab-btn" onclick="switchTab('progress')">📈 Progress</button>
         <button class="tab-btn" onclick="switchTab('compensation')">💰 Compensation</button>
         <button class="tab-btn" onclick="switchTab('points')">📋 Points Reference</button>
@@ -351,10 +389,18 @@
         <h3 style="margin:0 0 12px 0; font-size:16px; font-weight:600; color:#202124;">Manage Event Types</h3>
         <div style="margin-bottom:16px; padding:16px; background:#e8f0fe; border-radius:6px;">
           <h4 style="margin:0 0 8px 0; font-size:14px; color:#1a73e8;">Add New Event Type</h4>
-          <div class="form-grid"><div><label for="newEventTypeName">Event Type Name</label><input type="text" id="newEventTypeName" placeholder="e.g., Alliance War"></div><div><label for="newEventTypeMethod">Tracking Method</label><select id="newEventTypeMethod" onchange="EventsTab.updateEventTypeMethod()"><option value="" selected>-- Select Method --</option><option value="chest-based">Chest-Based</option><option value="manual-entry">Manual Entry</option></select></div></div>
+          <div class="form-grid"><div><label for="newEventTypeName">Event Type Name</label><input type="text" id="newEventTypeName" placeholder="e.g., Alliance War"></div><div><label for="newEventTypeMethod">Tracking Method</label><select id="newEventTypeMethod" onchange="EventsTab.updateEventTypeMethod()"><option value="" selected>-- Select Method --</option><option value="chest-based">Chest-Based</option><option value="manual-entry">Manual Entry</option><option value="troop-based">Troop-Based</option></select></div></div>
           <div id="chestTypeSection" style="display:none; margin-bottom:12px;"><label>Chest Types for This Event Type</label><div id="chestTypesList" style="max-height:200px; overflow-y:auto; border:1px solid #dadce0; border-radius:6px; padding:8px; background:#fff;"><div class="loading" style="padding:20px; text-align:center; color:#5f6368;">Loading chest types...</div></div><div class="note">Select which chest types count for this event type. Leave empty to include all chests.</div></div>
+          <div id="troopTargetSection" style="display:none; margin-bottom:12px;">
+            <label style="display:block; margin-bottom:8px; font-weight:600;">G Level Targets</label>
+            <p style="color:#5f6368; font-size:12px; margin-bottom:12px;">Set target points for each G level (1-9). Only enter the levels you need.</p>
+            <div id="troopTargetsList" style="border:1px solid #dadce0; border-radius:6px; padding:12px; background:#fafbfc; margin-bottom:12px; max-height:250px; overflow-y:auto;">
+              <!-- Targets will be added dynamically here -->
+            </div>
+            <button type="button" class="btn" style="width:100%; margin-bottom:12px;" onclick="EventsTab.addTroopTargetRow()">➕ Add G Level Target</button>
+          </div>
           <div style="margin-bottom:12px;"><label for="newEventTypeDesc">Description (Optional)</label><input type="text" id="newEventTypeDesc" placeholder="Brief description"></div>
-          <div style="margin-bottom:12px;"><label for="newEventTypeThreshold">Threshold (Optional)</label><input type="number" id="newEventTypeThreshold" placeholder="0" min="0" step="1"><div class="note">For manual events: minimum points required. For chest-based: target chest count. Leave 0 to disable threshold checking.</div></div>
+          <div style="margin-bottom:12px;"><label for="newEventTypeThreshold">Threshold (Optional)</label><input type="number" id="newEventTypeThreshold" placeholder="0" min="0" step="1"><div class="note">For manual events: minimum points required. For chest-based: target chest count. For troop-based: number of troops meeting target (leave 0 to disable).</div></div>
           <button class="btn" id="saveEventTypeBtn" onclick="EventsTab.submitAddEventType()">➕ Add Event Type</button>
           <button class="btn btn-secondary" id="cancelEditTypeBtn" style="display:none;" onclick="EventsTab.cancelEditEventType()">✖ Cancel Edit</button>
           <div id="addTypeStatus" class="status"></div>
@@ -417,6 +463,80 @@
         <tbody id="membersTableBody"></tbody>
       </table>
       <div id="memberEmpty" class="loading" style="display:none;">No members match your search criteria</div>
+    </div>
+  </div>
+
+  <!-- TROOPS TAB -->
+  <div id="troops" class="tab-content">
+    <div class="header">
+      <h1>⚔️ Troop Level Tracker</h1>
+      <p>Track and manage troop levels (G, M, S, E) and crypt levels for each member</p>
+    </div>
+
+    <div class="tabs-container">
+      <div class="tabs">
+        <button class="tab active" onclick="TroopsTab.switchSubTab('entry')">Add Entry</button>
+        <button class="tab" onclick="TroopsTab.switchSubTab('player')">View Player History</button>
+      </div>
+
+      <!-- ADD ENTRY SUB-TAB -->
+      <div id="troopEntry" class="tab-content active">
+        <div style="display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 16px;"><div><label for="troopPlayerName">Player Name *</label><select id="troopPlayerName" required onchange="TroopsTab.updatePlayerHistory()" style="width: auto; min-width: 150px;"><option value="">-- Select Player --</option></select></div><div><label for="troopType">Type *</label><select id="troopType" required style="width: auto; min-width: 140px;"><option value="">-- Select Type --</option><option value="G">Guardsmen (G)</option><option value="M">Monsters (M)</option><option value="S">Specialists (S)</option><option value="E">Engineering (E)</option><option value="C">Crypt (C)</option></select></div><div><label for="troopLevel">Level *</label><input type="number" id="troopLevel" required min="0" placeholder="45" style="width: 80px;" /></div><div><label for="troopResearch">Research</label><input type="text" id="troopResearch" placeholder="e.g., [START] or notes" style="width: 200px;" /></div><div style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" id="troopIsStarting" /><label for="troopIsStarting" style="margin: 0; font-weight: normal; text-transform: none;">Starting</label></div><div style="display: flex; gap: 8px;"><button type="button" class="btn" onclick="TroopsTab.submitTroopEntry()">Add Entry</button><button type="button" class="btn btn-secondary" onclick="TroopsTab.resetTroopForm()">Clear</button></div></div>
+
+        <div id="troopEntryMessage" class="status" style="margin-top: 8px;"></div>
+
+        <div id="troopPlayerHistoryContainer" style="margin-top: 20px; display: none;">
+          <h2>Recent History for Selected Player</h2>
+          <div id="troopPlayerHistoryTable"></div>
+        </div>
+      </div>
+
+      <!-- PLAYER HISTORY SUB-TAB -->
+      <div id="troopPlayer" class="tab-content">
+        <div class="form-group">
+          <label for="troopHistoryPlayerSelect">Select Player</label>
+          <select id="troopHistoryPlayerSelect" onchange="TroopsTab.loadPlayerHistory()">
+            <option value="">-- Select Player --</option>
+          </select>
+        </div>
+
+        <div id="troopPlayerHistoryContent"></div>
+      </div>
+
+      </div>
+    </div>
+
+    <!-- SUMMARY SECTION - Always Visible -->
+    <div id="troopSummarySection" style="margin-top: 30px;">
+      <h2>All Members - Latest Troop Levels</h2>
+      <div id="troopSummaryContent" class="loading">Loading...</div>
+      <div class="table-container" style="margin-top: 20px; overflow-x: auto;">
+        <table id="troopMembersTable" style="display: none;">
+          <thead>
+            <tr>
+              <th class="sortable" data-column="playerName">Member Name</th>
+              <th class="center" colspan="2">G</th>
+              <th class="center" colspan="2">M</th>
+              <th class="center" colspan="2">S</th>
+              <th class="center" colspan="2">E</th>
+              <th class="center crypt-col" colspan="2">C</th>
+            </tr>
+            <tr>
+              <th class="sortable" data-column="G_currentLevel">Level</th>
+              <th class="center sortable" data-column="G_currentDate">Date</th>
+              <th class="center sortable" data-column="M_currentLevel">Level</th>
+              <th class="center sortable" data-column="M_currentDate">Date</th>
+              <th class="center sortable" data-column="S_currentLevel">Level</th>
+              <th class="center sortable" data-column="S_currentDate">Date</th>
+              <th class="center sortable" data-column="E_currentLevel">Level</th>
+              <th class="center sortable" data-column="E_currentDate">Date</th>
+              <th class="center crypt-col sortable" data-column="C_currentLevel">Level</th>
+              <th class="center crypt-col sortable" data-column="C_currentDate">Date</th>
+            </tr>
+          </thead>
+          <tbody id="troopMembersTableBody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -870,6 +990,7 @@
       document.getElementById('readOnlyBadge').style.display = 'block';
     }
     let membersInitialized = false;
+    let troopsInitialized = false;
     let progressInitialized = false;
     let compensationInitialized = false;
 
@@ -892,7 +1013,7 @@
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.getElementById(tabId)?.classList.add('active');
-      const tabNames = ['dashboard','events','members','progress','points'];
+      const tabNames = ['dashboard','events','members','troops','progress','compensation','points'];
       const idx = tabNames.indexOf(tabId);
       const btns = document.querySelectorAll('.tab-btn');
       if (idx >= 0 && btns[idx]) btns[idx].classList.add('active');
@@ -911,6 +1032,14 @@
         }
       }
       if (tabId === 'members' && !membersInitialized) { membersInitialized = true; MembersTab.init(); }
+      if (tabId === 'troops') {
+        if (!troopsInitialized) {
+          troopsInitialized = true;
+          TroopsTab.init();
+        } else {
+          TroopsTab.switchSubTab('summary');
+        }
+      }
       if (tabId === 'progress' && !progressInitialized) { progressInitialized = true; ProgressTab.init(); }
       if (tabId === 'compensation' && !compensationInitialized) { compensationInitialized = true; CompensationTab.init(); }
     }
@@ -999,9 +1128,9 @@
       if (data.lastAvailableDate) {
         const dateObj = new Date(data.lastAvailableDate + 'T00:00:00');
         const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        document.getElementById('lastUpdatedDisplay').textContent = `Last Date Available: ${dateStr} • Weekly target: 2000 points`;
+        document.getElementById('lastUpdatedDisplay').textContent = `Last Date Available: ${dateStr} • Weekly target: 10 000 points`;
       } else {
-        document.getElementById('lastUpdatedDisplay').textContent = 'Last Date Available: No data available • Weekly target: 2000 points';
+        document.getElementById('lastUpdatedDisplay').textContent = 'Last Date Available: No data available • Weekly target: 10 000 points';
       }
     }
     function displayPlayerStats(stats) {
@@ -1041,7 +1170,7 @@
       playerArray.forEach((player,idx)=>{
         const commonCryptInfo = player.chestsByTypeGrouped?.['Common Crypt'];
         const totalPointsVal = player.totalPoints || 0;
-        const pointsClass = totalPointsVal >= 2000 ? 'player-green' : (totalPointsVal >= 1000 ? 'player-orange' : 'player-red');
+        const pointsClass = totalPointsVal >= 10000 ? 'player-green' : (totalPointsVal >= 5000 ? 'player-orange' : 'player-red');
         rowsHtml += '<div class="player-row">';
         rowsHtml += `<div class="cell rank-col">${idx+1}</div><div class="cell ${pointsClass}">${player.player}</div><div class="cell">${totalPointsVal || '-'}</div>`;
         // Calculate total chests: use totalChests if available, otherwise sum from chestsByTypeGrouped (don't double-count eventChests!)
@@ -1449,19 +1578,206 @@
       function getSelectedChestTypes() { const checkboxes=document.querySelectorAll('#chestTypesList input[type="checkbox"]:checked'); return Array.from(checkboxes).map(cb=>cb.value); }
       function setSelectedChestTypes(typesCsv) { const types=(typesCsv||'').split(',').map(t=>t.trim()).filter(Boolean); document.querySelectorAll('#chestTypesList input[type="checkbox"]').forEach(cb=>{ cb.checked = types.includes(cb.value); }); }
       function submitAddEventType() {
-        const typeName=document.getElementById('newEventTypeName').value.trim(); const method=document.getElementById('newEventTypeMethod').value; const description=document.getElementById('newEventTypeDesc').value.trim(); const threshold=Number(document.getElementById('newEventTypeThreshold').value) || 0; const selectedChestTypes=(method==='chest-based')?getSelectedChestTypes().join(','):''; const status=document.getElementById('addTypeStatus'); status.textContent=''; status.className='status';
+        const typeName=document.getElementById('newEventTypeName').value.trim(); 
+        const method=document.getElementById('newEventTypeMethod').value; 
+        const description=document.getElementById('newEventTypeDesc').value.trim(); 
+        const threshold=Number(document.getElementById('newEventTypeThreshold').value) || 0; 
+        const status=document.getElementById('addTypeStatus'); 
+        status.textContent=''; 
+        status.className='status';
+        
         if (!typeName) { status.textContent='Please enter an event type name.'; status.classList.add('err'); return; }
         if (!method) { status.textContent='Please select a tracking method.'; status.classList.add('err'); return; }
+        
+        let selectedChestTypes = '';
+        let troopTargets = '';
+        
+        if (method==='chest-based') {
+          selectedChestTypes = getSelectedChestTypes().join(',');
+        } else if (method==='troop-based') {
+          troopTargets = getTroopTargets();
+          if (!troopTargets) {
+            status.textContent='Please set at least one G level target.';
+            status.classList.add('err');
+            return;
+          }
+        }
+        
         status.textContent = editingTypeOriginalName ? 'Updating event type...' : 'Adding event type...';
-        const onSuccess=(result)=>{ if (result && result.success) { status.textContent=result.message; status.classList.add('ok'); resetEventTypeForm(); loadEventTypes(); renderEventTypesTable(); } else { status.textContent=result?.message||'Failed to save event type.'; status.classList.add('err'); } };
-        const onFailure=(error)=>{ status.textContent=`Error: ${error.message}`; status.classList.add('err'); };
-        if (editingTypeOriginalName) { google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updateEventType(editingTypeOriginalName,typeName,method,selectedChestTypes,description,threshold); }
-        else { google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).addEventType(typeName,method,selectedChestTypes,description,threshold); }
+        
+        const onSuccess=(result)=>{ 
+          if (result && result.success) { 
+            status.textContent=result.message; 
+            status.classList.add('ok'); 
+            resetEventTypeForm(); 
+            loadEventTypes(); 
+            renderEventTypesTable(); 
+          } else { 
+            status.textContent=result?.message||'Failed to save event type.'; 
+            status.classList.add('err'); 
+          } 
+        };
+        
+        const onFailure=(error)=>{ 
+          status.textContent=`Error: ${error.message}`; 
+          status.classList.add('err'); 
+        };
+        
+        if (editingTypeOriginalName) { 
+          google.script.run
+            .withSuccessHandler(onSuccess)
+            .withFailureHandler(onFailure)
+            .updateEventType(editingTypeOriginalName, typeName, method, selectedChestTypes, description, threshold, troopTargets); 
+        } else { 
+          google.script.run
+            .withSuccessHandler(onSuccess)
+            .withFailureHandler(onFailure)
+            .addEventType(typeName, method, selectedChestTypes, description, threshold, troopTargets); 
+        }
       }
-      function updateEventTypeMethod() { const method=document.getElementById('newEventTypeMethod').value; const chestSection=document.getElementById('chestTypeSection'); if (method==='chest-based') chestSection.style.display='block'; else { chestSection.style.display='none'; setSelectedChestTypes(''); } }
-      function editEventType(eventTypeName) { const status=document.getElementById('addTypeStatus'); status.textContent=''; status.className='status'; const eventType=eventTypesData.find(et=>et.name===eventTypeName); if (!eventType) { status.textContent='Unable to find that event type for editing.'; status.classList.add('err'); return; } editingTypeOriginalName=eventTypeName; document.getElementById('newEventTypeName').value=eventType.name||''; document.getElementById('newEventTypeMethod').value=eventType.trackingMethod||''; document.getElementById('newEventTypeDesc').value=eventType.description||''; document.getElementById('newEventTypeThreshold').value=eventType.threshold||0; document.getElementById('saveEventTypeBtn').textContent='💾 Save Event Type'; document.getElementById('cancelEditTypeBtn').style.display='inline-block'; updateEventTypeMethod(); if (eventType.trackingMethod==='chest-based') setSelectedChestTypes(eventType.chestTypes); else setSelectedChestTypes(''); status.textContent=`Editing "${eventType.name}"...`; }
+      
+      function getTroopTargets() {
+        const rows = document.querySelectorAll('#troopTargetsList .troop-target-row');
+        const targets = {};
+        
+        rows.forEach(row => {
+          const level = row.querySelector('select').value;
+          const points = row.querySelector('input[type="number"]').value;
+          
+          if (level && points) {
+            targets[level] = parseInt(points);
+          }
+        });
+        
+        if (Object.keys(targets).length === 0) {
+          return '';
+        }
+        
+        return JSON.stringify(targets);
+      }
+      
+      function setTroopTargets(targetsJson) {
+        console.log('[setTroopTargets] Called with:', targetsJson);
+        const container = document.getElementById('troopTargetsList');
+        
+        if (!container) {
+          console.error('[setTroopTargets] Container not found');
+          return;
+        }
+        
+        container.innerHTML = '';
+        
+        if (!targetsJson) {
+          console.log('[setTroopTargets] No targets to load');
+          return;
+        }
+        
+        try {
+          const targets = JSON.parse(targetsJson);
+          console.log('[setTroopTargets] Parsed targets:', targets);
+          Object.entries(targets).forEach(([level, points]) => {
+            console.log('[setTroopTargets] Adding row for level', level, 'with points', points);
+            addTroopTargetRow(level, points);
+          });
+        } catch (e) {
+          console.error('[setTroopTargets] Failed to parse troop targets:', e, 'Input:', targetsJson);
+        }
+      }
+      
+      function addTroopTargetRow(level = '', points = '') {
+        const container = document.getElementById('troopTargetsList');
+        if (!container) return;
+        
+        const rowId = 'troop-target-' + Date.now();
+        const row = document.createElement('div');
+        row.className = 'troop-target-row';
+        row.id = rowId;
+        row.style.cssText = 'display:grid; grid-template-columns:1fr 2fr auto; gap:8px; margin-bottom:8px; align-items:center;';
+        
+        row.innerHTML = `
+          <select style="padding:6px; border:1px solid #dadce0; border-radius:4px; font-size:13px;">
+            <option value="">-- Select Level --</option>
+            <option value="1" ${level === '1' || level === 1 ? 'selected' : ''}>Level 1</option>
+            <option value="2" ${level === '2' || level === 2 ? 'selected' : ''}>Level 2</option>
+            <option value="3" ${level === '3' || level === 3 ? 'selected' : ''}>Level 3</option>
+            <option value="4" ${level === '4' || level === 4 ? 'selected' : ''}>Level 4</option>
+            <option value="5" ${level === '5' || level === 5 ? 'selected' : ''}>Level 5</option>
+            <option value="6" ${level === '6' || level === 6 ? 'selected' : ''}>Level 6</option>
+            <option value="7" ${level === '7' || level === 7 ? 'selected' : ''}>Level 7</option>
+            <option value="8" ${level === '8' || level === 8 ? 'selected' : ''}>Level 8</option>
+            <option value="9" ${level === '9' || level === 9 ? 'selected' : ''}>Level 9</option>
+          </select>
+          <input type="number" placeholder="Target points" value="${points}" style="padding:6px; border:1px solid #dadce0; border-radius:4px; font-size:13px;" min="0" step="1">
+          <button type="button" class="btn btn-secondary" style="padding:4px 8px; font-size:12px;" onclick="EventsTab.removeTroopTargetRow('${rowId}')">✖ Remove</button>
+        `;
+        
+        container.appendChild(row);
+      }
+      
+      function removeTroopTargetRow(rowId) {
+        const row = document.getElementById(rowId);
+        if (row) {
+          row.remove();
+        }
+      }
+      function updateEventTypeMethod() { 
+        const method=document.getElementById('newEventTypeMethod').value; 
+        const chestSection=document.getElementById('chestTypeSection'); 
+        const troopSection=document.getElementById('troopTargetSection');
+        if (method==='chest-based') {
+          chestSection.style.display='block';
+          troopSection.style.display='none';
+        } else if (method==='troop-based') {
+          chestSection.style.display='none';
+          troopSection.style.display='block';
+        } else {
+          chestSection.style.display='none';
+          troopSection.style.display='none';
+        }
+      }
+      function editEventType(eventTypeName) { 
+        const status=document.getElementById('addTypeStatus'); 
+        status.textContent=''; 
+        status.className='status'; 
+        const eventType=eventTypesData.find(et=>et.name===eventTypeName); 
+        if (!eventType) { 
+          status.textContent='Unable to find that event type for editing.'; 
+          status.classList.add('err'); 
+          return; 
+        } 
+        console.log('[editEventType] Editing:', eventType);
+        editingTypeOriginalName=eventTypeName; 
+        document.getElementById('newEventTypeName').value=eventType.name||''; 
+        document.getElementById('newEventTypeMethod').value=eventType.trackingMethod||''; 
+        document.getElementById('newEventTypeDesc').value=eventType.description||''; 
+        document.getElementById('newEventTypeThreshold').value=eventType.threshold||0; 
+        document.getElementById('saveEventTypeBtn').textContent='💾 Save Event Type'; 
+        document.getElementById('cancelEditTypeBtn').style.display='inline-block'; 
+        updateEventTypeMethod(); 
+        if (eventType.trackingMethod==='chest-based') {
+          setSelectedChestTypes(eventType.chestTypes);
+        } else if (eventType.trackingMethod==='troop-based') {
+          console.log('[editEventType] Loading troop targets:', eventType.troopTargets);
+          // Small delay to ensure the section is visible
+          setTimeout(() => {
+            setTroopTargets(eventType.troopTargets);
+          }, 50);
+        }
+        status.textContent=`Editing "${eventType.name}"...`; 
+      }
       function cancelEditEventType() { resetEventTypeForm(); const status=document.getElementById('addTypeStatus'); status.textContent='Edit canceled.'; status.className='status'; }
-      function resetEventTypeForm() { editingTypeOriginalName=null; document.getElementById('newEventTypeName').value=''; document.getElementById('newEventTypeMethod').value=''; document.getElementById('newEventTypeDesc').value=''; document.getElementById('newEventTypeThreshold').value='0'; document.getElementById('saveEventTypeBtn').textContent='➕ Add Event Type'; document.getElementById('cancelEditTypeBtn').style.display='none'; setSelectedChestTypes(''); updateEventTypeMethod(); }
+      function resetEventTypeForm() { 
+        editingTypeOriginalName=null; 
+        document.getElementById('newEventTypeName').value=''; 
+        document.getElementById('newEventTypeMethod').value=''; 
+        document.getElementById('newEventTypeDesc').value=''; 
+        document.getElementById('newEventTypeThreshold').value='0'; 
+        document.getElementById('saveEventTypeBtn').textContent='➕ Add Event Type'; 
+        document.getElementById('cancelEditTypeBtn').style.display='none'; 
+        setSelectedChestTypes(''); 
+        setTroopTargets('');
+        updateEventTypeMethod(); 
+      }
       function loadEventTypes() { 
         document.getElementById('typesLoading').style.display='block'; 
         document.getElementById('eventTypesTable').style.display='none'; 
@@ -1516,7 +1832,7 @@
       function deleteEventTypeConfirm(eventTypeName) { if (!confirm(`Are you sure you want to delete event type "${eventTypeName}"?\n\nThis will fail if any events are using this type.`)) return; google.script.run.withSuccessHandler((result)=>{ if (result && result.success) { alert(result.message); loadEventTypes(); renderEventTypesTable(); } else { alert(result?.message||'Failed to delete event type.'); } }).withFailureHandler((error)=>alert(`Error: ${error.message}`)).deleteEventType(eventTypeName); }
       function escapeHtml(text) { if (!text) return ''; const div=document.createElement('div'); div.textContent=text; return div.innerHTML; }
       function sortTableProxy(column){ sortTable(column); }
-      return { init, switchTab, loadEvents, recalculateAllChestEvents, calculateChestParticipation, onChestEventSelected, onManualEventSelected, submitManualEntry, calculateManualNonParticipants, submitCreateEvent, sortTable: sortTableProxy, sortManualTable, updateEventTypeMethod, submitAddEventType, renderEventTypesTable, cancelEditEventType };
+      return { init, switchTab, loadEvents, recalculateAllChestEvents, calculateChestParticipation, onChestEventSelected, onManualEventSelected, submitManualEntry, calculateManualNonParticipants, submitCreateEvent, sortTable: sortTableProxy, sortManualTable, updateEventTypeMethod, submitAddEventType, renderEventTypesTable, cancelEditEventType, addTroopTargetRow, removeTroopTargetRow };
     })();
 
     // Members Tab
@@ -1600,6 +1916,433 @@
       function showTable() { document.getElementById('memberLoading').style.display='none'; document.getElementById('memberError').style.display='none'; document.getElementById('membersTable').style.display='table'; document.getElementById('memberEmpty').style.display='none'; }
       function showEmpty() { document.getElementById('memberLoading').style.display='none'; document.getElementById('memberError').style.display='none'; document.getElementById('membersTable').style.display='none'; document.getElementById('memberEmpty').style.display='block'; }
       return { init, loadMembers, switchTab, submitMightEntry, submitAddMember, submitNameChange, submitRemoveMember };
+    })();
+
+    // Troops Tab
+    const TroopsTab = (() => {
+      let summaryData = [];
+      let currentSort = { column: 'playerName', direction: 'asc' };
+
+      function init() {
+        setupSummarySorting();
+        loadTroopSummary();
+        // Delay loading to ensure google.script.run is ready
+        setTimeout(() => {
+          loadPlayerList();
+          loadPlayerHistoryList();
+        }, 100);
+        switchSubTab('entry');
+      }
+
+      function switchSubTab(tabName, evt) {
+        document.querySelectorAll('#troops .tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('#troops .tab').forEach(btn => btn.classList.remove('active'));
+        const contentId = 'troop' + tabName.charAt(0).toUpperCase() + tabName.slice(1);
+        document.getElementById(contentId)?.classList.add('active');
+        if (evt && evt.target) {
+          evt.target.classList.add('active');
+        } else {
+          const buttons = document.querySelectorAll('#troops .tab');
+          if (tabName === 'entry' && buttons[0]) buttons[0].classList.add('active');
+          if (tabName === 'player' && buttons[1]) buttons[1].classList.add('active');
+        }
+      }
+
+      function setupSummarySorting() {
+        const headers = document.querySelectorAll('#troopMembersTable thead th[data-column]');
+        headers.forEach(header => {
+          header.addEventListener('click', () => {
+            sortSummaryBy(header.dataset.column);
+          });
+        });
+        const defaultHeader = document.querySelector('#troopMembersTable thead th[data-column="playerName"]');
+        if (defaultHeader) defaultHeader.classList.add('asc');
+      }
+
+      function sortSummaryBy(column) {
+        if (!column) return;
+        if (currentSort.column === column) {
+          currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+        } else {
+          currentSort = { column, direction: column === 'playerName' ? 'asc' : 'desc' };
+        }
+
+        document.querySelectorAll('#troopMembersTable thead th.sortable').forEach(th => {
+          th.classList.remove('asc', 'desc');
+        });
+        const active = document.querySelector(`#troopMembersTable thead th[data-column="${column}"]`);
+        if (active) active.classList.add(currentSort.direction);
+
+        renderTroopSummary();
+      }
+
+      function getSortValue(member, column) {
+        if (column === 'playerName') return (member.playerName || '').toLowerCase();
+        if (column && column.endsWith('Date')) {
+          const value = member[column];
+          if (!value) return null;
+          const date = new Date(value);
+          return isNaN(date.getTime()) ? null : date.getTime();
+        }
+        const value = member[column];
+        return value === null || value === undefined ? null : Number(value);
+      }
+
+      function renderTroopSummary() {
+        const tableDiv = document.getElementById('troopMembersTable');
+        const tbody = document.getElementById('troopMembersTableBody');
+        if (!tableDiv || !tbody || !Array.isArray(summaryData)) return;
+
+        const sorted = summaryData.slice().sort((a, b) => {
+          const aVal = getSortValue(a, currentSort.column);
+          const bVal = getSortValue(b, currentSort.column);
+
+          if (aVal === null && bVal === null) return 0;
+          if (aVal === null) return 1;
+          if (bVal === null) return -1;
+
+          let result = 0;
+          if (currentSort.column === 'playerName') {
+            result = aVal.localeCompare(bVal);
+          } else {
+            result = aVal - bVal;
+          }
+
+          return currentSort.direction === 'asc' ? result : -result;
+        });
+
+        const types = ['G', 'M', 'S', 'E', 'C'];
+
+        tbody.innerHTML = '';
+        sorted.forEach(member => {
+          const row = document.createElement('tr');
+
+          const nameCell = document.createElement('td');
+          nameCell.style.fontWeight = '500';
+          nameCell.textContent = member.playerName;
+          row.appendChild(nameCell);
+
+          types.forEach(type => {
+            // Level cell
+            const levelCell = document.createElement('td');
+            const isCryptType = type === 'C';
+            levelCell.className = isCryptType ? 'center crypt-col' : 'center';
+            levelCell.style.fontWeight = '600';
+
+            const currentLevelKey = `${type}_currentLevel`;
+            const startLevelKey = `${type}_startLevel`;
+            const currentLevel = member[currentLevelKey];
+            const startLevel = member[startLevelKey];
+
+            if (currentLevel !== null && currentLevel !== undefined) {
+              levelCell.textContent = currentLevel;
+              // Blue if no change, purple if updated
+              if (currentLevel !== startLevel) {
+                levelCell.style.color = '#7b1fa2'; // Purple for updated
+              } else {
+                levelCell.style.color = '#1a73e8'; // Blue for unchanged
+              }
+            } else {
+              levelCell.textContent = '−';
+              levelCell.style.color = '#dadce0';
+              levelCell.style.fontWeight = '400';
+            }
+            row.appendChild(levelCell);
+
+            // Date cell
+            const dateCell = document.createElement('td');
+            dateCell.className = isCryptType ? 'center crypt-col' : 'center';
+            dateCell.style.fontSize = '12px';
+
+            const currentDateKey = `${type}_currentDate`;
+            const currentDate = member[currentDateKey];
+
+            if (currentDate !== null && currentDate !== undefined) {
+              dateCell.textContent = formatSummaryDate(currentDate);
+              // Apply same color as level cell
+              if (currentLevel !== startLevel) {
+                dateCell.style.color = '#7b1fa2'; // Purple for updated
+              } else {
+                dateCell.style.color = '#1a73e8'; // Blue for unchanged
+              }
+            } else {
+              dateCell.textContent = '−';
+              dateCell.style.color = '#dadce0';
+            }
+            row.appendChild(dateCell);
+          });
+
+          tbody.appendChild(row);
+        });
+
+        tableDiv.style.display = 'table';
+      }
+
+      function formatSummaryDate(value) {
+        try {
+          const date = new Date(value);
+          if (isNaN(date.getTime())) return '-';
+          return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        } catch (error) {
+          return '-';
+        }
+      }
+
+      function loadPlayerList() {
+        console.log('[TroopsTab.loadPlayerList] START');
+        google.script.run
+          .withSuccessHandler(members => {
+            console.log('[TroopsTab.loadPlayerList] Data received:', members);
+            const select = document.getElementById('troopPlayerName');
+            select.innerHTML = '<option value="">-- Select Player --</option>';
+            if (!Array.isArray(members)) {
+              console.error('[TroopsTab.loadPlayerList] Members is not an array:', typeof members, members);
+              select.innerHTML = '<option value="">-- Error: Invalid response --</option>';
+              return;
+            }
+            members.forEach(member => {
+              const name = (member && typeof member === 'object') ? (member.name || member.playerName || String(member)) : String(member);
+              const option = document.createElement('option');
+              option.value = name;
+              option.textContent = name;
+              select.appendChild(option);
+            });
+            console.log('[TroopsTab.loadPlayerList] Populated ' + members.length + ' members');
+          })
+          .withFailureHandler(error => {
+            console.error('[TroopsTab.loadPlayerList] API ERROR:', error);
+            const select = document.getElementById('troopPlayerName');
+            select.innerHTML = '<option value="">-- Error loading members --</option>';
+          })
+          .getTroopMembersForForm();
+      }
+
+      function loadPlayerHistoryList() {
+        console.log('[TroopsTab.loadPlayerHistoryList] START');
+        google.script.run
+          .withSuccessHandler(members => {
+            console.log('[TroopsTab.loadPlayerHistoryList] Data received:', members);
+            const select = document.getElementById('troopHistoryPlayerSelect');
+            select.innerHTML = '<option value="">-- Select Player --</option>';
+            if (!Array.isArray(members)) {
+              console.error('[TroopsTab.loadPlayerHistoryList] Members is not an array:', typeof members, members);
+              select.innerHTML = '<option value="">-- Error: Invalid response --</option>';
+              return;
+            }
+            members.forEach(member => {
+              const name = (member && typeof member === 'object') ? (member.name || member.playerName || String(member)) : String(member);
+              const option = document.createElement('option');
+              option.value = name;
+              option.textContent = name;
+              select.appendChild(option);
+            });
+            console.log('[TroopsTab.loadPlayerHistoryList] Populated ' + members.length + ' members');
+          })
+          .withFailureHandler(error => {
+            console.error('[TroopsTab.loadPlayerHistoryList] API ERROR:', error);
+            const select = document.getElementById('troopHistoryPlayerSelect');
+            select.innerHTML = '<option value="">-- Error loading members --</option>';
+          })
+          .getTroopMembersForForm();
+      }
+
+      function showStatus(message, type) {
+        const el = document.getElementById('troopEntryMessage');
+        el.textContent = message;
+        el.className = 'status ' + type;
+        if (type === 'ok') {
+          setTimeout(() => { el.className = 'status'; }, 4000);
+        }
+      }
+
+      function submitTroopEntry() {
+        const playerName = document.getElementById('troopPlayerName').value;
+        const troopType = document.getElementById('troopType').value;
+        const troopLevel = document.getElementById('troopLevel').value;
+        const notes = document.getElementById('troopResearch').value;
+
+        if (!playerName || !troopType || !troopLevel) {
+          showStatus('Please fill in all required fields.', 'err');
+          return;
+        }
+
+        google.script.run
+          .withSuccessHandler(result => {
+            if (result.success) {
+              showStatus(result.message, 'ok');
+              resetTroopForm();
+              updatePlayerHistory();
+            } else {
+              showStatus(result.message, 'err');
+            }
+          })
+          .withFailureHandler(error => {
+            showStatus('Error: ' + error.toString(), 'err');
+          })
+          .addTroopEntry(playerName, troopType, parseInt(troopLevel), notes);
+      }
+
+      function resetTroopForm() {
+        document.getElementById('troopPlayerName').value = '';
+        document.getElementById('troopType').value = '';
+        document.getElementById('troopLevel').value = '';
+        document.getElementById('troopResearch').value = '';
+        document.getElementById('troopPlayerHistoryContainer').style.display = 'none';
+        document.getElementById('troopEntryMessage').className = 'status';
+      }
+
+      function updatePlayerHistory() {
+        const playerName = document.getElementById('troopPlayerName').value;
+        if (!playerName) {
+          document.getElementById('troopPlayerHistoryContainer').style.display = 'none';
+          return;
+        }
+
+        google.script.run
+          .withSuccessHandler(history => {
+            const container = document.getElementById('troopPlayerHistoryContainer');
+            const tableDiv = document.getElementById('troopPlayerHistoryTable');
+
+            if (history.length === 0) {
+              tableDiv.innerHTML = '<div class="no-data">No history yet for this player</div>';
+              container.style.display = 'block';
+              return;
+            }
+
+            let html = '<div class="history-table">';
+            html += '<div class="table-header"><div>Date</div><div>Type</div><div>Level</div><div>Notes</div></div>';
+
+            history.slice(0, 10).forEach(entry => {
+              const date = new Date(entry.timestamp).toLocaleString();
+              html += `<div class="table-row">
+                <div class="table-cell timestamp">${date}</div>
+                <div class="table-cell">${entry.type}</div>
+                <div class="table-cell level">${entry.level}</div>
+                <div class="table-cell">${entry.notes || '-'}</div>
+              </div>`;
+            });
+
+            html += '</div>';
+            tableDiv.innerHTML = html;
+            container.style.display = 'block';
+          })
+          .getTroopHistory(playerName);
+      }
+
+      function loadPlayerHistory() {
+        const playerName = document.getElementById('troopHistoryPlayerSelect').value;
+        const contentDiv = document.getElementById('troopPlayerHistoryContent');
+
+        if (!playerName) {
+          contentDiv.innerHTML = '';
+          return;
+        }
+
+        google.script.run
+          .withSuccessHandler(history => {
+            if (history.length === 0) {
+              contentDiv.innerHTML = '<div class="no-data">No history found for this player</div>';
+              return;
+            }
+
+            google.script.run
+              .withSuccessHandler(latest => {
+                let html = '<div style="margin-bottom: 20px;">';
+                html += '<h2 style="font-size: 14px; margin-bottom: 12px;">Latest Levels</h2>';
+                html += '<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">';
+
+                const types = ['G', 'M', 'S', 'E', 'C'];
+                types.forEach(type => {
+                  const level = latest[type];
+                  const display = level !== null ? level : '-';
+                  const bgColor = type === 'C' ? '#fff3e0' : 'white';
+                  const borderColor = type === 'C' ? '#ffe0b2' : '#e8eaed';
+                  const textColor = type === 'C' ? '#e65100' : '#5f6368';
+                  const textWeight = type === 'C' ? 'bold' : '500';
+                  html += `<div style="padding: 12px; background: ${bgColor}; border: 1px solid ${borderColor}; border-radius: 4px; text-align: center;">
+                    <div style="font-size: 12px; color: ${textColor}; font-weight: ${textWeight};">${type}</div>
+                    <div style="font-size: 20px; font-weight: 600; color: #1a73e8;">${display}</div>
+                  </div>`;
+                });
+
+                html += '</div></div>';
+
+                html += '<div class="history-table">';
+                html += '<div class="table-header"><div>Date</div><div>Type</div><div>Level</div><div>Notes</div></div>';
+
+                history.forEach(entry => {
+                  const date = new Date(entry.timestamp).toLocaleString();
+                  html += `<div class="table-row">
+                    <div class="table-cell timestamp">${date}</div>
+                    <div class="table-cell">${entry.type}</div>
+                    <div class="table-cell level">${entry.level}</div>
+                    <div class="table-cell">${entry.notes || '-'}</div>
+                  </div>`;
+                });
+
+                html += '</div>';
+                contentDiv.innerHTML = html;
+              })
+              .getLatestTroopLevels(playerName);
+          })
+          .getTroopHistory(playerName);
+      }
+
+      function loadTroopSummary() {
+        const contentDiv = document.getElementById('troopSummaryContent');
+        const tableDiv = document.getElementById('troopMembersTable');
+        const tbody = document.getElementById('troopMembersTableBody');
+
+        contentDiv.className = 'loading';
+        contentDiv.textContent = 'Loading...';
+        tableDiv.style.display = 'none';
+
+        google.script.run
+          .withSuccessHandler(summary => {
+            console.log('[loadTroopSummary] Received summary:', summary, 'Type:', typeof summary, 'IsArray:', Array.isArray(summary), 'Length:', summary?.length);
+            // Defensive null check - ensure summary is an array
+            if (!summary || !Array.isArray(summary) || summary.length === 0) {
+              google.script.run
+                .withSuccessHandler(debug => {
+                  if (debug && debug.ok) {
+                    const lines = [
+                      'No troop data available yet.',
+                      `Members: ${debug.membersCount || 0}`,
+                      `TroopData rows: ${debug.troopDataRowCount || 0}`,
+                      `Spreadsheet: ${debug.spreadsheetName || 'unknown'}`
+                    ];
+                    contentDiv.innerHTML = `<div class="no-data" style="white-space: pre-line;">${lines.join('\n')}</div>`;
+                    tableDiv.style.display = 'none';
+                    return;
+                  }
+
+                  const err = debug && debug.error ? debug.error : 'Debug check failed';
+                  contentDiv.innerHTML = `<div class="no-data">No troop data available yet. (${err})</div>`;
+                  tableDiv.style.display = 'none';
+                })
+                .withFailureHandler(error => {
+                  contentDiv.innerHTML = '<div class="no-data">No troop data available yet</div>';
+                  tableDiv.style.display = 'none';
+                  console.error('getTroopSummaryDebug failed:', error);
+                })
+                .getTroopSummaryDebug();
+              return;
+            }
+
+            summaryData = summary;
+            renderTroopSummary();
+
+            contentDiv.className = '';
+            contentDiv.textContent = '';
+          })
+          .withFailureHandler(error => {
+            contentDiv.innerHTML = '<div class="no-data">Error loading summary: ' + error.toString() + '</div>';
+            tableDiv.style.display = 'none';
+          })
+          .getAllTroopLevelsSummary();
+      }
+
+      return { init, switchSubTab, submitTroopEntry, resetTroopForm, updatePlayerHistory, loadPlayerHistory, loadTroopSummary };
     })();
 
     // Progress Tab
@@ -2292,3 +3035,5 @@
   </script>
 </body>
 </html>
+
+
