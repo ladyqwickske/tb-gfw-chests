@@ -121,9 +121,14 @@
     #events tbody tr:hover td:first-child, #members tbody tr:hover td:first-child, #progress tbody tr:hover td:first-child, #troops tbody tr:hover td:first-child {
       background-color: #f8f9ff;
     }
-    #troops #troopMembersTable th:first-child, #troops #troopMembersTable td:first-child { width: 180px; min-width: 180px; }
+    #troopSummarySection .table-container { max-height: 70vh; overflow-y: auto; overflow-x: auto; }
+    #troopSummarySection .table-container::-webkit-scrollbar { width: 12px; height: 12px; }
+    #troopSummarySection .table-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 6px; }
+    #troopSummarySection .table-container::-webkit-scrollbar-thumb { background: #888; border-radius: 6px; }
+    #troopSummarySection .table-container::-webkit-scrollbar-thumb:hover { background: #555; }
+    #troops #troopMembersTable th:first-child, #troops #troopMembersTable td:first-child { width: 160px; min-width: 160px; max-width: 160px; }
+    #troops #troopMembersTable th:not(:first-child), #troops #troopMembersTable td:not(:first-child) { width: 65px; min-width: 65px; }
     #troops th.center, #troops td.center { text-align: center; }
-    #troops th.crypt-col, #troops td.crypt-col { width: 70px; max-width: 70px; min-width: 60px; }
     #troops #troopMembersTable thead th { position: sticky; top: 0; z-index: 10; background: #f8f9fa; }
     #troops #troopMembersTable thead th:first-child { position: sticky; left: 0; top: 0; z-index: 12; background: #f8f9fa; }
     #troops #troopMembersTable tbody td:first-child { position: sticky; left: 0; z-index: 10; background: white; }
